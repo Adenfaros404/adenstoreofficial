@@ -5,90 +5,61 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Adenstore Official</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
 body {
   font-family: 'Poppins', sans-serif;
   margin: 0;
-  background: linear-gradient(135deg, #1e1e2f, #3a3a6a);
-  color: white;
+  background: radial-gradient(circle at top, #0a0a0f, #000);
+  color: #eaeaff;
 }
 
-/* HEADER */
 .header {
   text-align: center;
-  padding: 20px;
-  font-weight: 600;
+  padding: 25px;
   font-size: 22px;
-}
-
-.sub {
-  text-align: center;
-  font-size: 13px;
-  opacity: 0.8;
-}
-
-/* COUNTER */
-.counter {
-  text-align: center;
-  margin: 10px 0;
-  color: #ffcc70;
-  font-weight: bold;
-}
-
-/* CARD */
-.container {
-  padding: 15px;
+  color: #c084fc;
+  text-shadow: 0 0 15px #7c3aed;
 }
 
 .card {
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(12px);
-  margin: 12px auto;
+  background: rgba(20,20,30,0.9);
+  border: 1px solid rgba(124,58,237,0.4);
+  margin: 14px auto;
   padding: 16px;
   border-radius: 16px;
-  width: 95%;
+  width: 92%;
   max-width: 420px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-  transition: 0.3s;
+  box-shadow: 0 0 15px rgba(124,58,237,0.2);
 }
 
-.card:hover {
-  transform: translateY(-3px);
-}
-
-/* BUTTON */
 button {
+  width: 100%;
   padding: 12px;
-  margin-top: 10px;
-  background: linear-gradient(135deg, #ff4d6d, #ff758c);
-  color: white;
+  margin-top: 12px;
+  background: linear-gradient(135deg,#7c3aed,#c084fc);
   border: none;
   border-radius: 10px;
-  width: 100%;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.3s;
+  color: white;
+  font-weight: bold;
 }
 
-button:hover {
-  opacity: 0.85;
+h3 {cursor:pointer;}
+
+.detail {
+  max-height: 0;
+  overflow: hidden;
+  transition: 0.4s;
+}
+.open {
+  max-height: 8000px;
 }
 
-/* BADGE */
-.badge {
-  background: #ff4d6d;
-  padding: 4px 8px;
-  border-radius: 6px;
-  font-size: 11px;
-}
-
-/* TESTI */
-.testi {
-  font-size: 13px;
-  margin: 8px 0;
-  opacity: 0.9;
+hr {
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  margin: 15px 0;
 }
 </style>
 </head>
@@ -96,93 +67,249 @@ button:hover {
 <body>
 
 <div class="header">🔥 ADENSTORE OFFICIAL</div>
-<div class="sub">Fast • Trusted • Digital Store</div>
-<div class="counter" id="counter"></div>
-
-<div class="container">
 
 <!-- HERO -->
 <div class="card">
-<h3>🎨 Paid Edit <span class="badge">BEST SELLER</span></h3>
-<p>Edit video / foto aesthetic premium</p>
-<p><b>Start from 35K</b></p>
-<button onclick="wa('Paid Edit')">Order Sekarang</button>
+<b>🎨 Paid Edit</b><br>Mulai dari Rp35.000
+<button onclick="wa('Paid Edit')">Order</button>
 </div>
 
 <div class="card">
-<h3>🎞 Buy Preset</h3>
-<p>Preset siap pakai aesthetic</p>
-<p><b>Start from 15K</b></p>
-<button onclick="wa('Buy Preset')">Beli Sekarang</button>
+<b>🎞 Buy Preset</b><br>Mulai dari Rp15.000
+<button onclick="wa('Buy Preset')">Order</button>
 </div>
 
 <!-- KUOTA -->
 <div class="card">
-<h3>📶 Kuota Akbar XL / Axis</h3>
+<h3 onclick="toggle('kuota')">📶 Kuota Akbar ▼</h3>
+<div id="kuota" class="detail">
 
-<p><b>SuperMini - 50K</b><br>
-A1:13–15GB | A2:15–17GB | A3:20–22GB | A4:30–32GB</p>
+<b>SuperMini — Rp50.000</b><br>
+Area 1: 13–15GB<br>
+Area 2: 15–17GB<br>
+Area 3: 20–22GB<br>
+Area 4: 30–32GB<br><br>
 
-<p><b>Mini - 60K</b><br>
-A1:31–33GB | A2:33–35GB | A3:38–40GB | A4:48–50GB</p>
+<b>Mini — Rp60.000</b><br>
+Area 1: 31.75–33.75GB<br>
+Area 2: 33.75–35.75GB<br>
+Area 3: 38.75–40.75GB<br>
+Area 4: 48.75–50.75GB<br><br>
 
-<p><b>Big - 65K</b><br>
-A1:38–40GB | A2:40–42GB | A3:45–47GB | A4:55–57GB</p>
+<b>Big — Rp65.000</b><br>
+Area 1: 38–40GB<br>
+Area 2: 40–42GB<br>
+Area 3: 45–47GB<br>
+Area 4: 55–57GB<br><br>
 
-<p><b>Jumbo V2 - 75K</b><br>
-A1:50–52GB | A2:52–54GB | A3:57–59GB | A4:67–69GB</p>
+<b>Jumbo V2 — Rp75.000</b><br>
+Area 1: 50.5–52.5GB<br>
+Area 2: 52.5–54.5GB<br>
+Area 3: 57.5–59.5GB<br>
+Area 4: 67.5–69.5GB<br><br>
 
-<p><b>Jumbo - 90K</b><br>
-A1:65GB | A2:70GB | A3:83GB | A4:123GB</p>
+<b>Jumbo — Rp90.000</b><br>
+Area 1: 65GB<br>
+Area 2: 70GB<br>
+Area 3: 83GB<br>
+Area 4: 123GB<br><br>
 
-<p><b>MegaBig - 100K</b><br>
-A1:88–90GB | A2:90–92GB | A3:95–97GB | A4:105–107GB</p>
+<b>MegaBig — Rp100.000</b><br>
+Area 1: 88–90GB<br>
+Area 2: 90–92GB<br>
+Area 3: 95–97GB<br>
+Area 4: 105–107GB<br>
 
-<button onclick="wa('Order Kuota Akbar')">Order Kuota</button>
+<button onclick="wa('Kuota Akbar')">Order Kuota</button>
+
+</div>
 </div>
 
-<!-- PRODUK -->
+<!-- PREMIUM -->
 <div class="card">
-<h3>📊 Produk Lain</h3>
-<p>Panel • Premium • Topup • Jasa Digital</p>
-<button onclick="wa('Tanya Produk Lain')">Tanya</button>
+<h3 onclick="toggle('premium')">🎬 Akun Premium ▼</h3>
+<div id="premium" class="detail">
+
+<b>📺 STREAMING APPS</b><br><br>
+
+• Netflix 1 user 1 day : 7.000<br>
+• Netflix 1 user 2 day : 8.000<br>
+• Netflix 1 user 3 day : 10.000<br>
+• Netflix 1 user 7 day : 13.000<br>
+• Netflix 1 user 1 month : 30.000<br><br>
+
+• Netflix 2 user 1 day : 6.500<br>
+• Netflix 2 user 2 day : 7.500<br>
+• Netflix 2 user 3 day : 9.000<br>
+• Netflix 2 user 7 day : 12.500<br>
+• Netflix 2 user 1 month : 20.000<br><br>
+
+• Netflix semi private 1 month : 32.000<br>
+• Netflix private 7 day : 45.000<br>
+• Netflix private 1 month : 130.000<br><br>
+
+• Disney+ shar 10 prem 1m : 20.000<br>
+• Disney+ shar 8u prem 1m : 26.000<br>
+• Disney+ shar 6u prem 1m : 31.000<br><br>
+
+• VIU unlim 1m : 5.500<br>
+• VIU unlim 2m : 8.500<br>
+• VIU unlim 3m : 9.500<br>
+• VIU unlim 6m : 7.000<br>
+• VIU unlim 1y : 8.000<br><br>
+
+• Prime Video shar 4u 1m : 10.000<br>
+• Prime Video shar 2u 1m : 13.000<br>
+• Prime Video private 1m : 17.000<br><br>
+
+• WeTV shar 1m : 10.000<br>
+• WeTV anlim 1m (3u) : 15.000<br>
+• WeTV shar 3m : 21.000<br>
+• WeTV private 1m : 27.000<br><br>
+
+• iQIYI shar std 1m : 9.500<br>
+• iQIYI shar std 3m : 12.000<br>
+• iQIYI shar std 1y : 14.000<br>
+• iQIYI shar prem 1m : 10.000<br>
+• iQIYI shar prem 3m : 13.000<br>
+• iQIYI shar prem 1y : 15.000<br><br>
+
+• iQIYI private std 1m : 32.000<br>
+• iQIYI private prem 1m : 35.000<br><br>
+
+• Vidplat shar mobile 1m : 17.500<br>
+• Vidplat shar alldev 1m : 26.000<br>
+• Vidplat priv mobile 1m : 27.000<br>
+• Vidplat priv alldev 1m : 41.000<br>
+• Vidplat priv onlytv 1m : 13.000<br><br>
+
+• Bstation shar 1m : 11.000<br>
+• Bstation shar 3m : 13.000<br>
+• Bstation shar 1y : 16.000<br>
+• Bstation private 1m : 32.000<br><br>
+
+• YouTube indplan 1m : 11.000<br>
+• YouTube famplan 1m : 7.000<br>
+• YouTube famplan 2m : 9.000<br>
+• YouTube famplan 3m : 11.000<br>
+• YouTube famhead 1m : 12.000<br><br>
+
+• Loklok basic 1m : 21.000<br>
+• Loklok std 1m : 25.000<br>
+• Loklok private 1m : 60.000<br><br>
+
+• DramaBox andro 1m : 15.000<br>
+• DramaBox ios 1m : 17.000<br><br>
+
+• Youku shar 1m : 9.000<br>
+• Youku shar 3m : 13.000<br>
+• Youku shar 1y : 16.500<br><br>
+
+• HBO Max shar std 1m : 19.000<br>
+• HBO Max shar ultimate 1m : 22.000<br><br>
+
+• Moviebox shar 1m : 13.000<br>
+• Crunchyroll shar 1y : 15.000<br><br>
+
+• Drakorid shar 1m : 10.000<br>
+• Drakorid shar 3m : 12.000<br>
+• Drakorid shar 6m : 13.000<br>
+• Drakorid shar 1y : 17.000<br><br>
+
+• Wibuku shar 1m : 11.000<br>
+• Wibuku shar 1y : 13.000<br><br>
+
+• Gagaolala shar 1m : 11.000<br>
+• Sunshiroll shar 1y : 13.000<br><br>
+
+<hr>
+
+<b>🎨 EDITING APPS</b><br><br>
+
+• Alightmotion shar 1y : 7.500<br>
+• Alightmotion priv 1y : 8.000<br><br>
+
+• Capcut shar 7d : 10.000<br>
+• Capcut priv 7d : 12.000<br>
+• Capcut shar 1m : 12.000<br>
+• Capcut priv 1m : 17.000<br><br>
+
+• Canva member 1m : 5.500<br>
+• Canva member 2m : 8.500<br>
+• Canva member 3m : 9.500<br>
+• Canva member 4m : 6.000<br>
+• Canva member 6m : 7.000<br>
+• Canva member 1y renew : 10.000<br>
+• Canva member 1y norenew : 12.000<br>
+• Canva edu lifetime : 13.000<br>
+• Canva admin 1m : 8.000<br>
+• Canva owner 1m : 12.000<br><br>
+
+• Picsart shar 1m : 10.000<br>
+• Picsart priv 1m : 13.000<br><br>
+
+• Ibispaint X andro 1y : 17.000<br><br>
+
+• Remini web shar 1m : 13.000<br>
+• Remini web priv 1m : 23.000<br><br>
+
+• Meitu shar 7d : 13.000<br>
+• Meitu shar 1m : 20.000<br><br>
+
+• Wink shar 7d : 11.000<br>
+• Wink priv 7d : 13.000<br><br>
+
+• VSCO+ shar 1y andro : 12.000<br>
+• VSCO+ shar 1y iOS : 15.000<br><br>
+
+• Lightroom shar 1y : 14.000<br>
+• Polar shar 1y : 16.000<br>
+• Oldroll lifetime : 15.000<br><br>
+
+<hr>
+
+<b>🎵 MUSIC APPS</b><br><br>
+
+• Spotify famplan 1m : 20.000<br>
+• Spotify indplan 1m (nogar) : 14.000<br>
+• Spotify indplan 1m (acc s) : 23.000<br><br>
+
+• Apple music famplan 1m : 11.000<br>
+• Apple music famplan 2m : 15.000<br>
+• Apple music indplan 1m : 13.000<br>
+• Apple music famhead 1m : 15.000<br><br>
+
+<hr>
+
+<b>📦 ANOTHER APPS</b><br><br>
+
+• Wattpad shar 1y : 20.000<br>
+• Scribd priv 1m : 15.000<br>
+• Zoom priv 7d : 14.000<br>
+• Zoom priv 1m : 18.000<br>
+• Grammarly shar 1m : 15.000<br>
+• Fizzo shar 1m : 12.000<br>
+
+<button onclick="wa('Akun Premium')">Order Premium</button>
+
+</div>
 </div>
 
-<!-- TESTI -->
+<!-- NOTE -->
 <div class="card">
-<h3>💬 Testimoni</h3>
-<p class="testi">"Trusted, fast respon!" ⭐⭐⭐⭐⭐</p>
-<p class="testi">"Kuota masuk cepat!" ⭐⭐⭐⭐⭐</p>
-<p class="testi">"Edit nya keren!" ⭐⭐⭐⭐⭐</p>
-<button onclick="wa('Bukti Transaksi')">Lihat Bukti</button>
-</div>
-
-<!-- PAYMENT -->
-<div class="card">
-<h3>💳 Pembayaran</h3>
-<p>DANA: 085868171795<br>
-A/N: UTYXXX WARXXXX<br>
-Fee: 750<br>
-<b>No fee = no process</b></p>
-</div>
-
+<b>📌 Note:</b><br>
+• Sistem antrian otomatis<br>
+• Estimasi 1x24 jam jika pending<br>
+• Jam tutup: 21:00<br>
+• Pembayaran via DANA (tanya admin di WA)<br>
 </div>
 
 <script>
-// COUNTER
-let total = 500;
-let current = Math.floor(Math.random()*300)+100;
-
-setInterval(()=>{
-  if(current<total) current+=1;
-  document.getElementById("counter").innerText =
-  "Order hari ini: "+current+"/"+total+" 🔥";
-},2000);
-
-// WA
-function wa(produk){
-let msg = `Halo Admin Adenstore%0ASaya mau: ${produk}`;
-window.open("https://wa.me/6283878348853?text="+msg);
+function toggle(id){
+  document.getElementById(id).classList.toggle("open");
+}
+function wa(p){
+  window.open("https://wa.me/6283878348853?text=Halo Admin, saya mau "+p);
 }
 </script>
 
