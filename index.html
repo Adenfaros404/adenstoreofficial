@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adenstore Official</title>
+
+<style>
+body {
+  font-family: Arial;
+  margin: 0;
+  background: linear-gradient(to right, #ff9a9e, #fad0c4);
+}
+
+.header {
+  background: #ff4d6d;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.sub {
+  text-align: center;
+  color: white;
+}
+
+.counter {
+  text-align: center;
+  color: yellow;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.container {
+  padding: 15px;
+}
+
+.card {
+  background: white;
+  margin: 10px auto;
+  padding: 15px;
+  border-radius: 12px;
+  width: 95%;
+  max-width: 420px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+button {
+  padding: 10px;
+  background: #ff4d6d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  width: 100%;
+  cursor: pointer;
+}
+
+input {
+  width: 95%;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.info {
+  font-size: 13px;
+  color: #555;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">🔥 ADENSTORE OFFICIAL 🔥</div>
+<div class="sub">All Digital Product • Fast • Trusted</div>
+<div class="counter" id="counter"></div>
+
+<div class="container">
+
+<!-- PAID EDIT (DITARUH ATAS BIAR NGEJUAL) -->
+<div class="card">
+<h3>🎨 Paid Edit (Best Seller)</h3>
+<p>Edit video / foto sesuai request</p>
+<p><b>Start from 35K</b></p>
+<button onclick="tanya('Paid Edit')">Order Sekarang</button>
+</div>
+
+<div class="card">
+<h3>🎞 Buy Preset</h3>
+<p>Preset siap pakai (instan aesthetic)</p>
+<p><b>Start from 15K</b></p>
+<button onclick="tanya('Buy Preset')">Order Sekarang</button>
+</div>
+
+<!-- PRODUK LAIN -->
+<div class="card">
+<h3>📶 Kuota Akbar</h3>
+<button onclick="tanya('Kuota Akbar')">Tanya / Pesan</button>
+</div>
+
+<div class="card">
+<h3>📊 Panel & Sosmed</h3>
+<button onclick="tanya('Panel & Sosmed')">Tanya / Pesan</button>
+</div>
+
+<div class="card">
+<h3>🎬 Akun Premium</h3>
+<button onclick="tanya('Akun Premium')">Tanya / Pesan</button>
+</div>
+
+<div class="card">
+<h3>💎 Top Up Game</h3>
+<button onclick="tanya('Top Up Game')">Tanya / Pesan</button>
+</div>
+
+<div class="card">
+<h3>🛠 Jasa Lainnya</h3>
+<button onclick="tanya('Jasa Lainnya')">Tanya / Pesan</button>
+</div>
+
+<!-- FORM -->
+<div class="card">
+<h3>Form Order</h3>
+
+<input type="text" id="nama" placeholder="Nama">
+<input type="text" id="nomor" placeholder="Nomor HP">
+
+<button onclick="kirim()">Kirim Order</button>
+
+<p class="info">
+⏰ Tutup jam 21:00<br>
+⚠️ Limit 500 order / hari<br>
+📦 Estimasi proses 1x24 jam
+</p>
+</div>
+
+<!-- PAYMENT -->
+<div class="card">
+<h3>Pembayaran</h3>
+<p>
+Soft Morning ✨<br>
+DANA Indonesia<br>
+No: 085868171795<br>
+A/N: UTYXXX WARXXXX<br>
+Fee: 750<br>
+<b>No fee = no process</b>
+</p>
+</div>
+
+</div>
+
+<script>
+// COUNTER RAMAI
+let total = 500;
+let current = Math.floor(Math.random() * 400) + 50;
+
+function updateCounter() {
+  if (current < total) {
+    current += Math.floor(Math.random() * 3);
+  }
+  document.getElementById("counter").innerText =
+    "Order hari ini: " + current + "/" + total + " (ramai 🔥)";
+}
+setInterval(updateCounter, 3000);
+updateCounter();
+
+// TANYA PRODUK
+function tanya(produk) {
+  let pesan = `Halo Admin Adenstore%0A
+Saya mau tanya:%0A
+Produk: ${produk}`;
+
+  let wa = "https://wa.me/6283878348853?text=" + pesan;
+  window.open(wa, "_blank");
+}
+
+// FORM ORDER
+function kirim() {
+  let nama = document.getElementById("nama").value;
+  let nomor = document.getElementById("nomor").value;
+  let jam = new Date().toLocaleTimeString();
+
+  if (nama === "" || nomor === "") {
+    alert("Isi data dulu!");
+    return;
+  }
+
+  let pesan = `ORDER ADENSTORE%0A
+Nama: ${nama}%0A
+Nomor: ${nomor}%0A
+Jam: ${jam}`;
+
+  let wa = "https://wa.me/6283878348853?text=" + pesan;
+  window.open(wa, "_blank");
+}
+</script>
+
+</body>
+  </html>
