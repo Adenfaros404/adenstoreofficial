@@ -5,196 +5,184 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Adenstore Official</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
 <style>
 body {
-  font-family: Arial;
+  font-family: 'Poppins', sans-serif;
   margin: 0;
-  background: linear-gradient(to right, #ff9a9e, #fad0c4);
+  background: linear-gradient(135deg, #1e1e2f, #3a3a6a);
+  color: white;
 }
 
+/* HEADER */
 .header {
-  background: #ff4d6d;
-  color: white;
-  padding: 15px;
   text-align: center;
+  padding: 20px;
+  font-weight: 600;
   font-size: 22px;
-  font-weight: bold;
 }
 
 .sub {
   text-align: center;
-  color: white;
+  font-size: 13px;
+  opacity: 0.8;
 }
 
+/* COUNTER */
 .counter {
   text-align: center;
-  color: yellow;
+  margin: 10px 0;
+  color: #ffcc70;
   font-weight: bold;
-  margin-top: 5px;
 }
 
+/* CARD */
 .container {
   padding: 15px;
 }
 
 .card {
-  background: white;
-  margin: 10px auto;
-  padding: 15px;
-  border-radius: 12px;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px);
+  margin: 12px auto;
+  padding: 16px;
+  border-radius: 16px;
   width: 95%;
   max-width: 420px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  transition: 0.3s;
 }
 
+.card:hover {
+  transform: translateY(-3px);
+}
+
+/* BUTTON */
 button {
-  padding: 10px;
-  background: #ff4d6d;
+  padding: 12px;
+  margin-top: 10px;
+  background: linear-gradient(135deg, #ff4d6d, #ff758c);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   width: 100%;
+  font-weight: 600;
   cursor: pointer;
+  transition: 0.3s;
 }
 
-input {
-  width: 95%;
-  padding: 10px;
-  margin: 5px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+button:hover {
+  opacity: 0.85;
 }
 
-.info {
+/* BADGE */
+.badge {
+  background: #ff4d6d;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+}
+
+/* TESTI */
+.testi {
   font-size: 13px;
-  color: #555;
+  margin: 8px 0;
+  opacity: 0.9;
 }
 </style>
 </head>
 
 <body>
 
-<div class="header">🔥 ADENSTORE OFFICIAL 🔥</div>
-<div class="sub">All Digital Product • Fast • Trusted</div>
+<div class="header">🔥 ADENSTORE OFFICIAL</div>
+<div class="sub">Fast • Trusted • Digital Store</div>
 <div class="counter" id="counter"></div>
 
 <div class="container">
 
-<!-- PAID EDIT (DITARUH ATAS BIAR NGEJUAL) -->
+<!-- HERO -->
 <div class="card">
-<h3>🎨 Paid Edit (Best Seller)</h3>
-<p>Edit video / foto sesuai request</p>
+<h3>🎨 Paid Edit <span class="badge">BEST SELLER</span></h3>
+<p>Edit video / foto aesthetic premium</p>
 <p><b>Start from 35K</b></p>
-<button onclick="tanya('Paid Edit')">Order Sekarang</button>
+<button onclick="wa('Paid Edit')">Order Sekarang</button>
 </div>
 
 <div class="card">
 <h3>🎞 Buy Preset</h3>
-<p>Preset siap pakai (instan aesthetic)</p>
+<p>Preset siap pakai aesthetic</p>
 <p><b>Start from 15K</b></p>
-<button onclick="tanya('Buy Preset')">Order Sekarang</button>
+<button onclick="wa('Buy Preset')">Beli Sekarang</button>
 </div>
 
-<!-- PRODUK LAIN -->
+<!-- KUOTA -->
 <div class="card">
-<h3>📶 Kuota Akbar</h3>
-<button onclick="tanya('Kuota Akbar')">Tanya / Pesan</button>
+<h3>📶 Kuota Akbar XL / Axis</h3>
+
+<p><b>SuperMini - 50K</b><br>
+A1:13–15GB | A2:15–17GB | A3:20–22GB | A4:30–32GB</p>
+
+<p><b>Mini - 60K</b><br>
+A1:31–33GB | A2:33–35GB | A3:38–40GB | A4:48–50GB</p>
+
+<p><b>Big - 65K</b><br>
+A1:38–40GB | A2:40–42GB | A3:45–47GB | A4:55–57GB</p>
+
+<p><b>Jumbo V2 - 75K</b><br>
+A1:50–52GB | A2:52–54GB | A3:57–59GB | A4:67–69GB</p>
+
+<p><b>Jumbo - 90K</b><br>
+A1:65GB | A2:70GB | A3:83GB | A4:123GB</p>
+
+<p><b>MegaBig - 100K</b><br>
+A1:88–90GB | A2:90–92GB | A3:95–97GB | A4:105–107GB</p>
+
+<button onclick="wa('Order Kuota Akbar')">Order Kuota</button>
 </div>
 
+<!-- PRODUK -->
 <div class="card">
-<h3>📊 Panel & Sosmed</h3>
-<button onclick="tanya('Panel & Sosmed')">Tanya / Pesan</button>
+<h3>📊 Produk Lain</h3>
+<p>Panel • Premium • Topup • Jasa Digital</p>
+<button onclick="wa('Tanya Produk Lain')">Tanya</button>
 </div>
 
+<!-- TESTI -->
 <div class="card">
-<h3>🎬 Akun Premium</h3>
-<button onclick="tanya('Akun Premium')">Tanya / Pesan</button>
-</div>
-
-<div class="card">
-<h3>💎 Top Up Game</h3>
-<button onclick="tanya('Top Up Game')">Tanya / Pesan</button>
-</div>
-
-<div class="card">
-<h3>🛠 Jasa Lainnya</h3>
-<button onclick="tanya('Jasa Lainnya')">Tanya / Pesan</button>
-</div>
-
-<!-- FORM -->
-<div class="card">
-<h3>Form Order</h3>
-
-<input type="text" id="nama" placeholder="Nama">
-<input type="text" id="nomor" placeholder="Nomor HP">
-
-<button onclick="kirim()">Kirim Order</button>
-
-<p class="info">
-⏰ Tutup jam 21:00<br>
-⚠️ Limit 500 order / hari<br>
-📦 Estimasi proses 1x24 jam
-</p>
+<h3>💬 Testimoni</h3>
+<p class="testi">"Trusted, fast respon!" ⭐⭐⭐⭐⭐</p>
+<p class="testi">"Kuota masuk cepat!" ⭐⭐⭐⭐⭐</p>
+<p class="testi">"Edit nya keren!" ⭐⭐⭐⭐⭐</p>
+<button onclick="wa('Bukti Transaksi')">Lihat Bukti</button>
 </div>
 
 <!-- PAYMENT -->
 <div class="card">
-<h3>Pembayaran</h3>
-<p>
-Soft Morning ✨<br>
-DANA Indonesia<br>
-No: 085868171795<br>
+<h3>💳 Pembayaran</h3>
+<p>DANA: 085868171795<br>
 A/N: UTYXXX WARXXXX<br>
 Fee: 750<br>
-<b>No fee = no process</b>
-</p>
+<b>No fee = no process</b></p>
 </div>
 
 </div>
 
 <script>
-// COUNTER RAMAI
+// COUNTER
 let total = 500;
-let current = Math.floor(Math.random() * 400) + 50;
+let current = Math.floor(Math.random()*300)+100;
 
-function updateCounter() {
-  if (current < total) {
-    current += Math.floor(Math.random() * 3);
-  }
+setInterval(()=>{
+  if(current<total) current+=1;
   document.getElementById("counter").innerText =
-    "Order hari ini: " + current + "/" + total + " (ramai 🔥)";
-}
-setInterval(updateCounter, 3000);
-updateCounter();
+  "Order hari ini: "+current+"/"+total+" 🔥";
+},2000);
 
-// TANYA PRODUK
-function tanya(produk) {
-  let pesan = `Halo Admin Adenstore%0A
-Saya mau tanya:%0A
-Produk: ${produk}`;
-
-  let wa = "https://wa.me/6283878348853?text=" + pesan;
-  window.open(wa, "_blank");
-}
-
-// FORM ORDER
-function kirim() {
-  let nama = document.getElementById("nama").value;
-  let nomor = document.getElementById("nomor").value;
-  let jam = new Date().toLocaleTimeString();
-
-  if (nama === "" || nomor === "") {
-    alert("Isi data dulu!");
-    return;
-  }
-
-  let pesan = `ORDER ADENSTORE%0A
-Nama: ${nama}%0A
-Nomor: ${nomor}%0A
-Jam: ${jam}`;
-
-  let wa = "https://wa.me/6283878348853?text=" + pesan;
-  window.open(wa, "_blank");
+// WA
+function wa(produk){
+let msg = `Halo Admin Adenstore%0ASaya mau: ${produk}`;
+window.open("https://wa.me/6283878348853?text="+msg);
 }
 </script>
 
