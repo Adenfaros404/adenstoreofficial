@@ -1,140 +1,229 @@
-<!DOCTYPE html><html lang="id">
+<!DOCTYPE html>
+<html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Daily Support Viral</title><style>
-body{
-  margin:0;
+<title>Tes Seberapa Miskin Lu</title>
+
+<style>
+body {
+  margin: 0;
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg,#fbcfe8,#f9a8d4,#f5d0fe);
-  color:#4b5563;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
-  text-align:center;
+  background: linear-gradient(135deg, #1a1a1a, #2b2b2b);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
 }
 
-.container{ max-width:420px; padding:20px; }
-
-.card{
-  background: rgba(255,255,255,0.7);
-  backdrop-filter: blur(15px);
-  border-radius:20px;
-  padding:25px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.1);
+.container {
+  width: 90%;
+  max-width: 400px;
+  background: #202020;
+  padding: 25px;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 0 30px rgba(0,0,0,0.5);
+  animation: fadeIn 0.6s ease;
 }
 
-.live{
-  font-size:12px;
-  color:#ec4899;
-  margin-bottom:10px;
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(20px);}
+  to {opacity: 1;}
 }
 
-.quote{ margin:20px 0; font-size:18px; min-height:70px; }
-
-button{
-  padding:10px 16px;
-  border:none;
-  border-radius:10px;
-  background:#ec4899;
-  color:white;
-  cursor:pointer;
-  margin:5px;
+h1 {
+  font-size: 20px;
 }
 
-button:disabled{ background:#9ca3af; }
+.progress {
+  height: 6px;
+  background: #333;
+  border-radius: 10px;
+  margin: 15px 0;
+  overflow: hidden;
+}
 
-.small{ font-size:12px; margin-top:10px; }
+.bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg,#ff4d6d,#ff9a9e);
+  transition: 0.4s;
+}
 
-</style></head>
-<body><div class="container">
-  <div class="card"><div class="live" id="live">💖 1.234 orang lagi butuh support sekarang</div>
+.question {
+  margin: 15px 0;
+  font-size: 17px;
+}
 
-<h2>Daily Support</h2>
+button {
+  width: 100%;
+  margin: 8px 0;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background: #2f2f2f;
+  color: white;
+  cursor: pointer;
+  transition: 0.2s;
+}
 
-<div class="quote" id="quote">Klik untuk ambil support hari ini</div>
+button:hover {
+  background: #444;
+  transform: scale(1.02);
+}
 
-<button id="btn" onclick="generate()">Ambil Support</button>
-<button onclick="copyQuote()">Copy</button>
-<button onclick="shareQuote()">Share</button>
+.result {
+  font-size: 18px;
+  margin: 20px 0;
+  white-space: pre-line;
+}
 
-<div class="small" id="info"></div>
+.share-btn {
+  background: #25D366;
+  font-weight: bold;
+}
 
-<div class="small" id="streak"></div>
+.copy-btn {
+  background: #555;
+}
 
-  </div>
-</div><script>
+.cta {
+  background: #ff4d6d;
+  font-weight: bold;
+}
 
-// ===== DATA =====
-const quotes = [
-  "Kamu lagi capek, bukan gagal.",
-  "Pelan itu gapapa, asal tetap jalan.",
-  "Hari ini berat, tapi kamu masih bertahan.",
-  "Gak semua orang kuat kayak kamu.",
-  "Istirahat boleh, nyerah jangan.",
-  "Kamu udah sejauh ini, jangan balik lagi.",
-  "Tenang, semua ada waktunya.",
-  "Kamu lagi proses jadi versi terbaikmu."
+.footer {
+  margin-top: 10px;
+  font-size: 12px;
+  opacity: 0.6;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+  <h1>💸 Tes Seberapa Miskin Lu</h1>
+  <div class="progress"><div class="bar" id="bar"></div></div>
+  <div class="question" id="q">Loading...</div>
+  <div id="a"></div>
+</div>
+
+<script>
+const data = [
+{q:"Saldo rekening sekarang?",a:[
+["Di atas 10 juta",0],
+["1-10 juta",2],
+["Di bawah 1 juta",4],
+["Nunggu keajaiban",6]
+]},
+{q:"Kalau lapar malam?",a:[
+["Order bebas",0],
+["Cek saldo dulu",2],
+["Air putih cukup",4],
+["Tidur biar lupa",6]
+]},
+{q:"Isi dompet?",a:[
+["Tebal banget",0],
+["Lumayan",2],
+["Tipis",4],
+["Kosong + struk",6]
+]},
+{q:"Pemasukan?",a:[
+["Stabil",0],
+["Kadang ada",2],
+["Jarang",4],
+["Mimpi doang",6]
+]},
+{q:"Kalau diskon?",a:[
+["Bodo amat",0],
+["Liat dulu",2],
+["Wajib ambil",4],
+["Nunggu gratis",6]
+]}
 ];
 
-// ===== LIVE COUNTER (FAKE VIRAL) =====
-setInterval(()=>{
-  let num = Math.floor(Math.random()*2000)+500;
-  document.getElementById('live').innerText = `💖 ${num} orang lagi butuh support sekarang`;
-},2000);
+let i=0, score=0;
 
-// ===== DAILY LOCK =====
-const today = new Date().toDateString();
-let lastClick = localStorage.getItem('lastClick');
+function load(){
+let d=data[i];
+q.innerText=d.q;
 
-// ===== STREAK =====
-let streak = parseInt(localStorage.getItem('streak')||0);
-let lastDay = localStorage.getItem('lastDay');
+a.innerHTML="";
+d.a.forEach(x=>{
+let btn=document.createElement("button");
+btn.innerText=x[0];
+btn.onclick=()=>next(x[1]);
+a.appendChild(btn);
+});
 
-if(lastDay !== today){
-  streak++;
-  localStorage.setItem('streak',streak);
-  localStorage.setItem('lastDay',today);
+bar.style.width=(i/data.length*100)+"%";
 }
 
-document.getElementById('streak').innerText = `🔥 Streak: ${streak} hari`;
+function next(s){
+score+=s;
+i++;
 
-function generate(){
-  if(lastClick === today){
-    document.getElementById('info').innerText = "Kamu sudah ambil hari ini 💖";
-    return;
-  }
+if(navigator.vibrate) navigator.vibrate(50);
 
-  let random = quotes[Math.floor(Math.random()*quotes.length)];
-  document.getElementById('quote').innerText = random;
-
-  localStorage.setItem('lastClick', today);
-  document.getElementById('btn').disabled = true;
-  document.getElementById('info').innerText = "Balik lagi besok ya 💕";
+if(i<data.length){
+load();
+}else{
+result();
+}
 }
 
-if(lastClick === today){
-  document.getElementById('btn').disabled = true;
-  document.getElementById('info').innerText = "Kamu sudah ambil hari ini 💖";
+function result(){
+let text="", level="";
+
+if(score<=6){
+level="🤑 Sultan Tersembunyi";
+text="Lu aman... tapi jangan lengah.";
+}else if(score<=12){
+level="🙂 Aman Tipis";
+text="Masih hidup, tapi rawan jatuh.";
+}else if(score<=18){
+level="😐 Ngambang";
+text="Lu lagi di fase bahaya finansial.";
+}else{
+level="💀 Miskin Brutal";
+text="Jujur... kondisi lu butuh perubahan.";
 }
 
-// ===== COPY =====
-function copyQuote(){
-  let text = document.getElementById('quote').innerText;
-  navigator.clipboard.writeText(text);
-  alert("Disalin 💕");
+let shareText = `Hasil tes gue:\n${level}\n${text}\n\nCoba lu juga 😭`;
+
+document.querySelector(".container").innerHTML=`
+<h1>${level}</h1>
+<div class="result">${text}</div>
+
+<button class="share-btn" onclick="share()">📲 Share WhatsApp</button>
+<button class="copy-btn" onclick="copy()">📋 Copy Hasil</button>
+
+<button class="cta" onclick="action()">🚀 Ubah Nasib Gue</button>
+
+<button onclick="location.reload()">🔄 Ulang</button>
+
+<div class="footer">Kadang bukan rezeki yang kurang… tapi cara lu cari uang.</div>
+`;
+
+window.share = function(){
+window.open("https://wa.me/?text="+encodeURIComponent(shareText));
 }
 
-// ===== SHARE =====
-function shareQuote(){
-  let text = document.getElementById('quote').innerText;
-  if(navigator.share){
-    navigator.share({text});
-  } else {
-    copyQuote();
-  }
+window.copy = function(){
+navigator.clipboard.writeText(shareText);
+alert("Disalin!");
 }
 
-</script></body>
+window.action = function(){
+window.open("https://wa.me/6283878348853?text=Gue mau mulai cari cuan, ajarin dong");
+}
+}
+
+load();
+</script>
+
+</body>
 </html>
