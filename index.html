@@ -1,235 +1,152 @@
-<!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html><html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Adenstore Official</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-
-<style>
-body {
-  font-family: 'Poppins', sans-serif;
-  margin: 0;
-  background: radial-gradient(circle at top, #0a0a0f, #000);
-  color: #eaeaff;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🔥 Viral Gabut Machine</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg,#0f0f1a,#1f1f3a);
+      color: white;
+      text-align: center;
+    }h1 {
+  font-size: 28px;
 }
 
-.header {
-  text-align: center;
-  padding: 25px;
-  font-size: 22px;
-  color: #c084fc;
-  text-shadow: 0 0 15px #7c3aed;
+.container {
+  padding: 20px;
 }
 
-.card {
-  background: rgba(20,20,30,0.9);
-  border: 1px solid rgba(124,58,237,0.4);
-  margin: 14px auto;
-  padding: 16px;
-  border-radius: 16px;
-  width: 92%;
-  max-width: 420px;
+.live {
+  color: #00ff9d;
+  font-size: 14px;
+  margin-bottom: 10px;
 }
 
 button {
-  width: 100%;
-  padding: 12px;
-  margin-top: 12px;
-  background: linear-gradient(135deg,#7c3aed,#c084fc);
+  padding: 12px 20px;
+  margin: 10px;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
+  background: linear-gradient(45deg,#ff4757,#ff6b81);
   color: white;
-  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s;
 }
 
-h3 {cursor:pointer;}
-
-.detail {
-  max-height: 0;
-  overflow: hidden;
-  transition: 0.4s;
-}
-.open {
-  max-height: 8000px;
+button:hover {
+  transform: scale(1.05);
 }
 
-#statusBox {
-  text-align:center;
-  font-size:14px;
+.card {
+  background: rgba(255,255,255,0.08);
+  padding: 20px;
+  border-radius: 15px;
+  margin-top: 20px;
+  animation: fadeIn 0.5s;
 }
-</style>
+
+.hidden { display:none; }
+
+@keyframes fadeIn {
+  from {opacity:0; transform:translateY(10px)}
+  to {opacity:1; transform:translateY(0)}
+}
+
+.shake {
+  animation: shake 0.3s;
+}
+
+@keyframes shake {
+  0%{transform:translateX(0)}
+  25%{transform:translateX(-5px)}
+  50%{transform:translateX(5px)}
+  75%{transform:translateX(-5px)}
+  100%{transform:translateX(0)}
+}
+
+.cta {
+  margin-top:20px;
+  background:#00c853;
+}
+
+  </style>
 </head>
+<body><div class="container">  <div class="live" id="liveCounter">🔥 12.391 orang lagi main sekarang</div>  <h1>😈 VIRAL GABUT MACHINE</h1>
+  <p>Pilih mode hiburan:</p><button onclick="show('tebak')">Tebak Ngaco</button> <button onclick="show('roast')">Roasting Brutal</button> <button onclick="show('hoki')">Cek Hoki</button>
 
-<body>
+  <!-- Tebak -->  <div id="tebak" class="card hidden">
+    <h2>10 + 10 = ?</h2>
+    <input id="jawaban" placeholder="Jawab disini">
+    <br>
+    <button onclick="cekJawaban()">Gas Jawab</button>
+    <p id="hasil"></p>
+  </div>  <!-- Roast -->  <div id="roast" class="card hidden">
+    <h2>Roasting Mode Aktif</h2>
+    <button onclick="roast()">Hajar Gue</button>
+    <p id="roastText"></p>
+  </div>  <!-- Hoki -->  <div id="hoki" class="card hidden">
+    <h2>Cek Keberuntungan</h2>
+    <button onclick="hoki()">Cek Sekarang</button>
+    <p id="hokiText"></p>
+  </div>  <!-- CTA BISNIS --><button class="cta" onclick="redirect()">🔥 Coba Hoki Kuota Murah</button>
 
-<div class="header">🔥 ADENSTORE OFFICIAL</div>
+</div><script>
 
-<!-- STATUS -->
-<div class="card" id="statusBox">
-<b id="statusText">Checking...</b><br>
-<small id="orderCount"></small>
-</div>
+// FAKE LIVE COUNTER
+setInterval(()=>{
+  let angka = Math.floor(Math.random()*5000)+8000;
+  document.getElementById('liveCounter').innerText = `🔥 ${angka.toLocaleString()} orang lagi main sekarang`;
+},2000);
 
-<!-- HERO -->
-<div class="card">
-<b>🎨 Paid Edit</b><br>Mulai dari Rp35.000
-<button onclick="wa('Paid Edit')">Order</button>
-</div>
-
-<div class="card">
-<b>🎞 Buy Preset</b><br>Mulai dari Rp15.000
-<button onclick="wa('Buy Preset')">Order</button>
-</div>
-
-<!-- KUOTA -->
-<div class="card">
-<h3 onclick="toggle('kuota')">📶 Kuota Akbar ▼</h3>
-<div id="kuota" class="detail">
-
-<b>SuperMini — Rp50.000</b><br>
-Area 1: 13–15GB<br>
-Area 2: 15–17GB<br>
-Area 3: 20–22GB<br>
-Area 4: 30–32GB<br><br>
-
-<b>Mini — Rp60.000</b><br>
-Area 1: 31.75–33.75GB<br>
-Area 2: 33.75–35.75GB<br>
-Area 3: 38.75–40.75GB<br>
-Area 4: 48.75–50.75GB<br><br>
-
-<b>Big — Rp65.000</b><br>
-Area 1: 38–40GB<br>
-Area 2: 40–42GB<br>
-Area 3: 45–47GB<br>
-Area 4: 55–57GB<br><br>
-
-<b>Jumbo V2 — Rp75.000</b><br>
-Area 1: 50.5–52.5GB<br>
-Area 2: 52.5–54.5GB<br>
-Area 3: 57.5–59.5GB<br>
-Area 4: 67.5–69.5GB<br><br>
-
-<b>Jumbo — Rp90.000</b><br>
-Area 1: 65GB<br>
-Area 2: 70GB<br>
-Area 3: 83GB<br>
-Area 4: 123GB<br><br>
-
-<b>MegaBig — Rp100.000</b><br>
-Area 1: 88–90GB<br>
-Area 2: 90–92GB<br>
-Area 3: 95–97GB<br>
-Area 4: 105–107GB<br>
-
-<button onclick="wa('Kuota Akbar')">Order Kuota</button>
-
-</div>
-</div>
-
-<!-- PREMIUM (FULL DETAIL LU — TIDAK DIPOTONG) -->
-<div class="card">
-<h3 onclick="toggle('premium')">🎬 Akun Premium ▼</h3>
-<div id="premium" class="detail">
-
-<b>📺 STREAMING APPS</b><br><br>
-
-• Netflix 1 user 1 day : 7.000<br>
-• Netflix 1 user 2 day : 8.000<br>
-• Netflix 1 user 3 day : 10.000<br>
-• Netflix 1 user 7 day : 13.000<br>
-• Netflix 1 user 1 month : 30.000<br><br>
-
-• Netflix 2 user 1 day : 6.500<br>
-• Netflix 2 user 2 day : 7.500<br>
-• Netflix 2 user 3 day : 9.000<br>
-• Netflix 2 user 7 day : 12.500<br>
-• Netflix 2 user 1 month : 20.000<br><br>
-
-• Netflix semi private 1 month : 32.000<br>
-• Netflix private 7 day : 45.000<br>
-• Netflix private 1 month : 130.000<br><br>
-
-• Disney+ shar 10 prem 1m : 20.000<br>
-• Disney+ shar 8u prem 1m : 26.000<br>
-• Disney+ shar 6u prem 1m : 31.000<br><br>
-
-• VIU unlim 1m : 5.500<br>
-• VIU unlim 2m : 8.500<br>
-• VIU unlim 3m : 9.500<br>
-• VIU unlim 6m : 7.000<br>
-• VIU unlim 1y : 8.000<br><br>
-
-• Prime Video shar 4u 1m : 10.000<br>
-• Prime Video shar 2u 1m : 13.000<br>
-• Prime Video private 1m : 17.000<br><br>
-
-• WeTV shar 1m : 10.000<br>
-• WeTV anlim 1m (3u) : 15.000<br>
-• WeTV shar 3m : 21.000<br>
-• WeTV private 1m : 27.000<br><br>
-
-• iQIYI shar std 1m : 9.500<br>
-• iQIYI shar std 3m : 12.000<br>
-• iQIYI shar std 1y : 14.000<br>
-• iQIYI shar prem 1m : 10.000<br>
-• iQIYI shar prem 3m : 13.000<br>
-• iQIYI shar prem 1y : 15.000<br><br>
-
-• iQIYI private std 1m : 32.000<br>
-• iQIYI private prem 1m : 35.000<br><br>
-
-<!-- LANJUTAN SUDAH FULL SESUAI DATA LU -->
-
-<button onclick="wa('Akun Premium')">Order Premium</button>
-
-</div>
-</div>
-
-<script>
-// toggle
-function toggle(id){
-  document.getElementById(id).classList.toggle("open");
+function show(id){
+  document.getElementById('tebak').classList.add('hidden');
+  document.getElementById('roast').classList.add('hidden');
+  document.getElementById('hoki').classList.add('hidden');
+  document.getElementById(id).classList.remove('hidden');
 }
 
-// SYSTEM STATUS
-function checkStatus(){
-  let now = new Date();
-  let hour = now.getHours();
+function cekJawaban(){
+  let jwb = document.getElementById('jawaban').value;
+  let hasil = document.getElementById('hasil');
 
-  let statusText = document.getElementById("statusText");
-  let orderCount = document.getElementById("orderCount");
-
-  let fakeOrder = localStorage.getItem("order") || Math.floor(Math.random()*8000);
-  fakeOrder = parseInt(fakeOrder) + Math.floor(Math.random()*5);
-  if(fakeOrder > 10000) fakeOrder = 10000;
-  localStorage.setItem("order", fakeOrder);
-
-  orderCount.innerHTML = "📦 Order hari ini: " + fakeOrder + "/10000";
-
-  if(hour >= 10 && hour < 21){
-    statusText.innerHTML = "🟢 OPEN ORDER • Sedang ramai";
-    window.isOpen = true;
+  if(jwb=="2"){
+    hasil.innerText = "BENAR 😭 karena logika gabut";
   } else {
-    statusText.innerHTML = "🔴 CLOSED • Buka jam 10:00";
-    window.isOpen = false;
+    hasil.innerText = "SALAH 😈 otak lu terlalu normal";
+    document.body.classList.add('shake');
+    setTimeout(()=>document.body.classList.remove('shake'),300);
   }
 }
 
-// WA BUTTON
-function wa(p){
-  if(!window.isOpen){
-    alert("Order ditutup, buka jam 10:00");
-    return;
-  }
-  window.open("https://wa.me/6283878348853?text=Halo Admin, saya mau "+p);
+function roast(){
+  let list=[
+    "Lu bukan gagal... lu cuma belum pernah serius 😭",
+    "Rencana lu banyak, tapi aksi lu nihil 😈",
+    "Lu nunggu motivasi, padahal yang lu butuh itu tekanan 😏",
+    "Hidup lu stuck karena lu sendiri santai 😭"
+  ];
+  let r=list[Math.floor(Math.random()*list.length)];
+  document.getElementById('roastText').innerText=r;
 }
 
-checkStatus();
-setInterval(checkStatus,5000);
-</script>
+function hoki(){
+  let list=[
+    "Hoki 5% — jangan sok jago hari ini 😭",
+    "Hoki 40% — masih bisa lah 😏",
+    "Hoki 80% — gas ambil peluang 😈",
+    "Hoki 1% — mending diem 😭"
+  ];
+  let r=list[Math.floor(Math.random()*list.length)];
+  document.getElementById('hokiText').innerText=r;
+}
 
-</body>
+function redirect(){
+  alert("Masuk ke dunia cuan... 😈");
+  window.location.href = "https://wa.me/6283878348853";
+}
+
+</script></body>
   </html>
