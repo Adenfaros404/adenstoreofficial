@@ -1,152 +1,202 @@
 <!DOCTYPE html><html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🔥 Viral Gabut Machine</title>
-  <style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Support Hub</title>  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">  <style>
+    * { box-sizing: border-box; }
+
     body {
       margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg,#0f0f1a,#1f1f3a);
-      color: white;
+      font-family: 'Inter', sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 40px;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 20px;
+    }
+
+    .hero {
       text-align: center;
-    }h1 {
-  font-size: 28px;
-}
+      margin-bottom: 50px;
+    }
 
-.container {
-  padding: 20px;
-}
+    .hero h1 {
+      font-size: 34px;
+      margin-bottom: 10px;
+    }
 
-.live {
-  color: #00ff9d;
-  font-size: 14px;
-  margin-bottom: 10px;
-}
+    .hero p {
+      color: #94a3b8;
+    }
 
-button {
-  padding: 12px 20px;
-  margin: 10px;
-  border: none;
-  border-radius: 12px;
-  background: linear-gradient(45deg,#ff4757,#ff6b81);
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-  transition: 0.2s;
-}
+    .cta {
+      margin-top: 20px;
+      padding: 14px 24px;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(135deg,#3b82f6,#2563eb);
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.2s;
+    }
 
-button:hover {
-  transform: scale(1.05);
-}
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
+      gap: 20px;
+    }
 
-.card {
-  background: rgba(255,255,255,0.08);
-  padding: 20px;
-  border-radius: 15px;
-  margin-top: 20px;
-  animation: fadeIn 0.5s;
-}
+    .card {
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 16px;
+      transition: 0.2s;
+    }
 
-.hidden { display:none; }
+    .card:hover {
+      transform: translateY(-5px);
+    }
 
-@keyframes fadeIn {
-  from {opacity:0; transform:translateY(10px)}
-  to {opacity:1; transform:translateY(0)}
-}
+    .section {
+      margin-top: 60px;
+    }
 
-.shake {
-  animation: shake 0.3s;
-}
+    .chat-box {
+      margin-top: 20px;
+      background: #020617;
+      padding: 15px;
+      border-radius: 12px;
+      height: 200px;
+      overflow-y: auto;
+      text-align: left;
+      font-size: 14px;
+    }
 
-@keyframes shake {
-  0%{transform:translateX(0)}
-  25%{transform:translateX(-5px)}
-  50%{transform:translateX(5px)}
-  75%{transform:translateX(-5px)}
-  100%{transform:translateX(0)}
-}
+    input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      margin-top: 10px;
+    }
 
-.cta {
-  margin-top:20px;
-  background:#00c853;
-}
+    .footer {
+      text-align: center;
+      margin-top: 60px;
+      font-size: 12px;
+      color: #64748b;
+    }
 
-  </style>
-</head>
-<body><div class="container">  <div class="live" id="liveCounter">🔥 12.391 orang lagi main sekarang</div>  <h1>😈 VIRAL GABUT MACHINE</h1>
-  <p>Pilih mode hiburan:</p><button onclick="show('tebak')">Tebak Ngaco</button> <button onclick="show('roast')">Roasting Brutal</button> <button onclick="show('hoki')">Cek Hoki</button>
+  </style></head>
+<body><div class="container">  <header>
+    <div class="logo">🎓 Student Support Hub</div>
+  </header>  <section class="hero">
+    <h1>Tempat Bantu Mahasiswa Bertahan & Berkembang</h1>
+    <p>Tools sederhana untuk bantu kamu tetap waras di dunia kuliah</p>
+    <button class="cta" onclick="scrollToTools()">Mulai Sekarang</button>
+  </section>  <section class="grid">
+    <div class="card">
+      <h3>📅 To-Do Harian</h3>
+      <p>Catat tugas biar gak numpuk</p>
+      <input id="todoInput" placeholder="Tulis tugas...">
+      <div id="todoList"></div>
+    </div><div class="card">
+  <h3>🧠 Mood Tracker</h3>
+  <p>Gimana kondisi kamu hari ini?</p>
+  <button onclick="setMood('😄 Baik')">😄</button>
+  <button onclick="setMood('😐 Biasa')">😐</button>
+  <button onclick="setMood('😞 Capek')">😞</button>
+  <p id="moodResult"></p>
+</div>
 
-  <!-- Tebak -->  <div id="tebak" class="card hidden">
-    <h2>10 + 10 = ?</h2>
-    <input id="jawaban" placeholder="Jawab disini">
-    <br>
-    <button onclick="cekJawaban()">Gas Jawab</button>
-    <p id="hasil"></p>
-  </div>  <!-- Roast -->  <div id="roast" class="card hidden">
-    <h2>Roasting Mode Aktif</h2>
-    <button onclick="roast()">Hajar Gue</button>
-    <p id="roastText"></p>
-  </div>  <!-- Hoki -->  <div id="hoki" class="card hidden">
-    <h2>Cek Keberuntungan</h2>
-    <button onclick="hoki()">Cek Sekarang</button>
-    <p id="hokiText"></p>
-  </div>  <!-- CTA BISNIS --><button class="cta" onclick="redirect()">🔥 Coba Hoki Kuota Murah</button>
+<div class="card">
+  <h3>⏱ Focus Timer</h3>
+  <p>25 menit fokus (Pomodoro)</p>
+  <button onclick="startTimer()">Mulai</button>
+  <p id="timer">25:00</p>
+</div>
 
-</div><script>
+  </section>  <section class="section">
+    <h2>💬 Curhat Anonim</h2>
+    <div class="chat-box" id="chatBox"></div>
+    <input id="chatInput" placeholder="Tulis isi pikiran kamu..." onkeypress="if(event.key==='Enter') sendChat()">
+  </section>  <div class="footer">
+    Dibuat untuk mahasiswa yang lagi berjuang, bukan yang nyerah.
+  </div></div><script>
 
-// FAKE LIVE COUNTER
-setInterval(()=>{
-  let angka = Math.floor(Math.random()*5000)+8000;
-  document.getElementById('liveCounter').innerText = `🔥 ${angka.toLocaleString()} orang lagi main sekarang`;
-},2000);
-
-function show(id){
-  document.getElementById('tebak').classList.add('hidden');
-  document.getElementById('roast').classList.add('hidden');
-  document.getElementById('hoki').classList.add('hidden');
-  document.getElementById(id).classList.remove('hidden');
-}
-
-function cekJawaban(){
-  let jwb = document.getElementById('jawaban').value;
-  let hasil = document.getElementById('hasil');
-
-  if(jwb=="2"){
-    hasil.innerText = "BENAR 😭 karena logika gabut";
-  } else {
-    hasil.innerText = "SALAH 😈 otak lu terlalu normal";
-    document.body.classList.add('shake');
-    setTimeout(()=>document.body.classList.remove('shake'),300);
+// TODO
+let todos = [];
+document.getElementById('todoInput').addEventListener('keypress', function(e){
+  if(e.key==='Enter'){
+    todos.push(this.value);
+    this.value='';
+    renderTodo();
   }
+});
+
+function renderTodo(){
+  let html='';
+  todos.forEach(t=>{
+    html += `<p>- ${t}</p>`;
+  });
+  document.getElementById('todoList').innerHTML = html;
 }
 
-function roast(){
-  let list=[
-    "Lu bukan gagal... lu cuma belum pernah serius 😭",
-    "Rencana lu banyak, tapi aksi lu nihil 😈",
-    "Lu nunggu motivasi, padahal yang lu butuh itu tekanan 😏",
-    "Hidup lu stuck karena lu sendiri santai 😭"
-  ];
-  let r=list[Math.floor(Math.random()*list.length)];
-  document.getElementById('roastText').innerText=r;
+// MOOD
+function setMood(m){
+  document.getElementById('moodResult').innerText = "Hari ini kamu: " + m;
 }
 
-function hoki(){
-  let list=[
-    "Hoki 5% — jangan sok jago hari ini 😭",
-    "Hoki 40% — masih bisa lah 😏",
-    "Hoki 80% — gas ambil peluang 😈",
-    "Hoki 1% — mending diem 😭"
-  ];
-  let r=list[Math.floor(Math.random()*list.length)];
-  document.getElementById('hokiText').innerText=r;
+// TIMER
+let time = 1500;
+let interval;
+function startTimer(){
+  clearInterval(interval);
+  interval = setInterval(()=>{
+    time--;
+    let m = Math.floor(time/60);
+    let s = time%60;
+    document.getElementById('timer').innerText = `${m}:${s<10?'0':''}${s}`;
+    if(time<=0) clearInterval(interval);
+  },1000);
 }
 
-function redirect(){
-  alert("Masuk ke dunia cuan... 😈");
-  window.location.href = "https://wa.me/6283878348853";
+// CHAT
+function sendChat(){
+  let input = document.getElementById('chatInput');
+  let msg = input.value;
+  if(!msg) return;
+
+  let box = document.getElementById('chatBox');
+  box.innerHTML += `<p>🧑‍🎓 ${msg}</p>`;
+
+  setTimeout(()=>{
+    box.innerHTML += `<p>🤖 Tetap jalan, capek itu normal.</p>`;
+    box.scrollTop = box.scrollHeight;
+  },800);
+
+  input.value='';
+}
+
+function scrollToTools(){
+  window.scrollTo({top:300,behavior:'smooth'});
 }
 
 </script></body>
-  </html>
+                                          </html>
