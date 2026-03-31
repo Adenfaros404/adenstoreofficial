@@ -2,58 +2,66 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Student Support Hub</title>  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">  <style>
-    * { box-sizing: border-box; }
+  <title>Campus Support System</title>  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">  <style>
+    * { box-sizing: border-box; margin:0; padding:0 }
 
     body {
-      margin: 0;
       font-family: 'Inter', sans-serif;
-      background: #0f172a;
+      background: linear-gradient(135deg,#0f172a,#020617);
       color: #e2e8f0;
+      display: flex;
     }
 
-    .container {
-      max-width: 1100px;
-      margin: auto;
+    /* SIDEBAR */
+    .sidebar {
+      width: 240px;
+      height: 100vh;
+      background: rgba(255,255,255,0.03);
+      backdrop-filter: blur(10px);
       padding: 20px;
     }
 
-    header {
+    .sidebar h2 {
+      margin-bottom: 30px;
+      font-size: 18px;
+    }
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .menu button {
+      background: none;
+      border: none;
+      color: #94a3b8;
+      text-align: left;
+      cursor: pointer;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    .menu button:hover {
+      background: rgba(255,255,255,0.05);
+      color: white;
+    }
+
+    /* MAIN */
+    .main {
+      flex: 1;
+      padding: 30px;
+    }
+
+    .header {
       display: flex;
       justify-content: space-between;
-      align-items: center;
-      margin-bottom: 40px;
+      margin-bottom: 30px;
     }
 
-    .logo {
-      font-weight: 700;
-      font-size: 20px;
-    }
-
-    .hero {
-      text-align: center;
-      margin-bottom: 50px;
-    }
-
-    .hero h1 {
-      font-size: 34px;
-      margin-bottom: 10px;
-    }
-
-    .hero p {
-      color: #94a3b8;
-    }
-
-    .cta {
-      margin-top: 20px;
-      padding: 14px 24px;
-      border-radius: 12px;
-      border: none;
-      background: linear-gradient(135deg,#3b82f6,#2563eb);
-      color: white;
+    .title {
+      font-size: 24px;
       font-weight: 600;
-      cursor: pointer;
-      transition: 0.2s;
     }
 
     .grid {
@@ -63,29 +71,14 @@
     }
 
     .card {
-      background: #1e293b;
+      background: rgba(255,255,255,0.05);
       padding: 20px;
       border-radius: 16px;
-      transition: 0.2s;
+      backdrop-filter: blur(10px);
     }
 
-    .card:hover {
-      transform: translateY(-5px);
-    }
-
-    .section {
-      margin-top: 60px;
-    }
-
-    .chat-box {
-      margin-top: 20px;
-      background: #020617;
-      padding: 15px;
-      border-radius: 12px;
-      height: 200px;
-      overflow-y: auto;
-      text-align: left;
-      font-size: 14px;
+    .card h3 {
+      margin-bottom: 10px;
     }
 
     input {
@@ -96,107 +89,139 @@
       margin-top: 10px;
     }
 
-    .footer {
-      text-align: center;
-      margin-top: 60px;
-      font-size: 12px;
-      color: #64748b;
+    button.primary {
+      margin-top: 10px;
+      padding: 10px;
+      width: 100%;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(135deg,#3b82f6,#2563eb);
+      color: white;
+      cursor: pointer;
+    }
+
+    .chat {
+      height: 200px;
+      overflow-y: auto;
+      font-size: 14px;
+      margin-top: 10px;
+    }
+
+    .streak {
+      font-size: 28px;
+      font-weight: bold;
+      color: #22c55e;
     }
 
   </style></head>
-<body><div class="container">  <header>
-    <div class="logo">🎓 Student Support Hub</div>
-  </header>  <section class="hero">
-    <h1>Tempat Bantu Mahasiswa Bertahan & Berkembang</h1>
-    <p>Tools sederhana untuk bantu kamu tetap waras di dunia kuliah</p>
-    <button class="cta" onclick="scrollToTools()">Mulai Sekarang</button>
-  </section>  <section class="grid">
+<body><div class="sidebar">
+  <h2>🎓 Support System</h2>
+  <div class="menu">
+    <button onclick="show('dashboard')">Dashboard</button>
+    <button onclick="show('task')">Task Manager</button>
+    <button onclick="show('focus')">Focus Mode</button>
+    <button onclick="show('mental')">Mental Support</button>
+  </div>
+</div><div class="main">  <div class="header">
+    <div class="title">Dashboard</div>
+  </div>  <!-- DASHBOARD -->  <div id="dashboard" class="page">
+    <div class="grid">
+      <div class="card">
+        <h3>🔥 Streak Konsistensi</h3>
+        <div class="streak" id="streak">0 Hari</div>
+      </div><div class="card">
+    <h3>📊 Status Hari Ini</h3>
+    <p id="status">Belum mulai apa-apa</p>
+  </div>
+</div>
+
+  </div>  <!-- TASK -->  <div id="task" class="page" style="display:none">
     <div class="card">
-      <h3>📅 To-Do Harian</h3>
-      <p>Catat tugas biar gak numpuk</p>
-      <input id="todoInput" placeholder="Tulis tugas...">
-      <div id="todoList"></div>
-    </div><div class="card">
-  <h3>🧠 Mood Tracker</h3>
-  <p>Gimana kondisi kamu hari ini?</p>
-  <button onclick="setMood('😄 Baik')">😄</button>
-  <button onclick="setMood('😐 Biasa')">😐</button>
-  <button onclick="setMood('😞 Capek')">😞</button>
-  <p id="moodResult"></p>
-</div>
-
-<div class="card">
-  <h3>⏱ Focus Timer</h3>
-  <p>25 menit fokus (Pomodoro)</p>
-  <button onclick="startTimer()">Mulai</button>
-  <p id="timer">25:00</p>
-</div>
-
-  </section>  <section class="section">
-    <h2>💬 Curhat Anonim</h2>
-    <div class="chat-box" id="chatBox"></div>
-    <input id="chatInput" placeholder="Tulis isi pikiran kamu..." onkeypress="if(event.key==='Enter') sendChat()">
-  </section>  <div class="footer">
-    Dibuat untuk mahasiswa yang lagi berjuang, bukan yang nyerah.
+      <h3>Task Harian</h3>
+      <input id="taskInput" placeholder="Tambah tugas...">
+      <div id="taskList"></div>
+    </div>
+  </div>  <!-- FOCUS -->  <div id="focus" class="page" style="display:none">
+    <div class="card">
+      <h3>Focus Timer</h3>
+      <div id="timer">25:00</div>
+      <button class="primary" onclick="startTimer()">Mulai Fokus</button>
+    </div>
+  </div>  <!-- MENTAL -->  <div id="mental" class="page" style="display:none">
+    <div class="card">
+      <h3>Curhat Anonim</h3>
+      <div class="chat" id="chat"></div>
+      <input id="chatInput" placeholder="Tulis isi pikiran..." onkeypress="if(event.key==='Enter') send()">
+    </div>
   </div></div><script>
 
-// TODO
-let todos = [];
-document.getElementById('todoInput').addEventListener('keypress', function(e){
+// NAVIGATION
+function show(page){
+  document.querySelectorAll('.page').forEach(p=>p.style.display='none');
+  document.getElementById(page).style.display='block';
+}
+
+// TASK SYSTEM (SAVE)
+let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+const taskInput = document.getElementById('taskInput');
+
+taskInput.addEventListener('keypress', e=>{
   if(e.key==='Enter'){
-    todos.push(this.value);
-    this.value='';
-    renderTodo();
+    tasks.push(taskInput.value);
+    localStorage.setItem('tasks',JSON.stringify(tasks));
+    taskInput.value='';
+    renderTask();
   }
 });
 
-function renderTodo(){
+function renderTask(){
   let html='';
-  todos.forEach(t=>{
-    html += `<p>- ${t}</p>`;
-  });
-  document.getElementById('todoList').innerHTML = html;
+  tasks.forEach(t=> html+=`<p>- ${t}</p>`);
+  document.getElementById('taskList').innerHTML=html;
 }
-
-// MOOD
-function setMood(m){
-  document.getElementById('moodResult').innerText = "Hari ini kamu: " + m;
-}
+renderTask();
 
 // TIMER
-let time = 1500;
-let interval;
+let time=1500, interval;
 function startTimer(){
   clearInterval(interval);
-  interval = setInterval(()=>{
+  interval=setInterval(()=>{
     time--;
-    let m = Math.floor(time/60);
-    let s = time%60;
-    document.getElementById('timer').innerText = `${m}:${s<10?'0':''}${s}`;
-    if(time<=0) clearInterval(interval);
+    let m=Math.floor(time/60);
+    let s=time%60;
+    document.getElementById('timer').innerText=`${m}:${s<10?'0':''}${s}`;
+    if(time<=0){
+      clearInterval(interval);
+      updateStreak();
+    }
   },1000);
 }
 
-// CHAT
-function sendChat(){
-  let input = document.getElementById('chatInput');
-  let msg = input.value;
-  if(!msg) return;
+// STREAK
+let streak = localStorage.getItem('streak') || 0;
+document.getElementById('streak').innerText = streak + " Hari";
 
-  let box = document.getElementById('chatBox');
-  box.innerHTML += `<p>🧑‍🎓 ${msg}</p>`;
+function updateStreak(){
+  streak++;
+  localStorage.setItem('streak',streak);
+  document.getElementById('streak').innerText = streak + " Hari";
+  document.getElementById('status').innerText = "Hari produktif";
+}
+
+// CHAT
+function send(){
+  let input=document.getElementById('chatInput');
+  let chat=document.getElementById('chat');
+
+  chat.innerHTML += `<p>🧑 ${input.value}</p>`;
 
   setTimeout(()=>{
-    box.innerHTML += `<p>🤖 Tetap jalan, capek itu normal.</p>`;
-    box.scrollTop = box.scrollHeight;
-  },800);
+    chat.innerHTML += `<p>🤖 Lu capek bukan berarti lu gagal. Lanjut pelan aja.</p>`;
+    chat.scrollTop=chat.scrollHeight;
+  },700);
 
   input.value='';
 }
 
-function scrollToTools(){
-  window.scrollTo({top:300,behavior:'smooth'});
-}
-
 </script></body>
-                                          </html>
+      </html>
