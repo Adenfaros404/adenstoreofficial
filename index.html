@@ -1,227 +1,197 @@
 <!DOCTYPE html><html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Campus Support System</title>  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">  <style>
-    * { box-sizing: border-box; margin:0; padding:0 }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Support Kuliah</title>
+<meta name="theme-color" content="#0f172a"><style>
+:root{
+  --bg1:#0f172a;
+  --bg2:#1e293b;
+  --accent:#3b82f6;
+}
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: linear-gradient(135deg,#0f172a,#020617);
-      color: #e2e8f0;
-      display: flex;
-    }
+*{box-sizing:border-box}
 
-    /* SIDEBAR */
-    .sidebar {
-      width: 240px;
-      height: 100vh;
-      background: rgba(255,255,255,0.03);
-      backdrop-filter: blur(10px);
-      padding: 20px;
-    }
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+  background: linear-gradient(135deg,var(--bg2),var(--bg1));
+  color:white;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  text-align:center;
+  transition: background 0.6s ease;
+}
 
-    .sidebar h2 {
-      margin-bottom: 30px;
-      font-size: 18px;
-    }
+.container{
+  max-width:420px;
+  width:100%;
+  padding:22px;
+}
 
-    .menu {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
+.card{
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(12px);
+  border-radius:18px;
+  padding:22px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
 
-    .menu button {
-      background: none;
-      border: none;
-      color: #94a3b8;
-      text-align: left;
-      cursor: pointer;
-      padding: 10px;
-      border-radius: 8px;
-    }
+h1{
+  font-size:22px;
+  margin-bottom:10px;
+}
 
-    .menu button:hover {
-      background: rgba(255,255,255,0.05);
-      color: white;
-    }
+.sub{
+  font-size:13px;
+  color:#94a3b8;
+  margin-bottom:15px;
+}
 
-    /* MAIN */
-    .main {
-      flex: 1;
-      padding: 30px;
-    }
+.quote{
+  margin:20px 0;
+  font-size:18px;
+  line-height:1.4;
+  color:#e2e8f0;
+  min-height:70px;
+  transition:0.3s;
+}
 
-    .header {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 30px;
-    }
+.controls{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
 
-    .title {
-      font-size: 24px;
-      font-weight: 600;
-    }
+button{
+  padding:10px 14px;
+  border:none;
+  border-radius:10px;
+  background:var(--accent);
+  color:white;
+  cursor:pointer;
+  transition:0.2s;
+}
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
-      gap: 20px;
-    }
+button:hover{ transform:translateY(-2px) }
 
-    .card {
-      background: rgba(255,255,255,0.05);
-      padding: 20px;
-      border-radius: 16px;
-      backdrop-filter: blur(10px);
-    }
+.secondary{
+  background:#334155;
+}
 
-    .card h3 {
-      margin-bottom: 10px;
-    }
+.small{
+  font-size:12px;
+  color:#64748b;
+  margin-top:15px;
+}
 
-    input {
-      width: 100%;
-      padding: 10px;
-      border-radius: 10px;
-      border: none;
-      margin-top: 10px;
-    }
+.fade{ opacity:0; transform:translateY(6px)}
+.show{ opacity:1; transform:translateY(0)}
 
-    button.primary {
-      margin-top: 10px;
-      padding: 10px;
-      width: 100%;
-      border: none;
-      border-radius: 10px;
-      background: linear-gradient(135deg,#3b82f6,#2563eb);
-      color: white;
-      cursor: pointer;
-    }
+</style></head>
+<body><div class="container">
+  <div class="card">
+    <h1>🎓 Support Buat Kamu yang Lagi Kuliah</h1>
+    <div class="sub" id="meta">Hari ke-0 • 0 kali buka</div><div class="quote fade" id="quote">Memuat support...</div>
 
-    .chat {
-      height: 200px;
-      overflow-y: auto;
-      font-size: 14px;
-      margin-top: 10px;
-    }
-
-    .streak {
-      font-size: 28px;
-      font-weight: bold;
-      color: #22c55e;
-    }
-
-  </style></head>
-<body><div class="sidebar">
-  <h2>🎓 Support System</h2>
-  <div class="menu">
-    <button onclick="show('dashboard')">Dashboard</button>
-    <button onclick="show('task')">Task Manager</button>
-    <button onclick="show('focus')">Focus Mode</button>
-    <button onclick="show('mental')">Mental Support</button>
-  </div>
-</div><div class="main">  <div class="header">
-    <div class="title">Dashboard</div>
-  </div>  <!-- DASHBOARD -->  <div id="dashboard" class="page">
-    <div class="grid">
-      <div class="card">
-        <h3>🔥 Streak Konsistensi</h3>
-        <div class="streak" id="streak">0 Hari</div>
-      </div><div class="card">
-    <h3>📊 Status Hari Ini</h3>
-    <p id="status">Belum mulai apa-apa</p>
-  </div>
+<div class="controls">
+  <button onclick="generate()">Kasih Support</button>
+  <button class="secondary" onclick="copyQuote()">Copy</button>
+  <button class="secondary" onclick="shareQuote()">Share</button>
 </div>
 
-  </div>  <!-- TASK -->  <div id="task" class="page" style="display:none">
-    <div class="card">
-      <h3>Task Harian</h3>
-      <input id="taskInput" placeholder="Tambah tugas...">
-      <div id="taskList"></div>
-    </div>
-  </div>  <!-- FOCUS -->  <div id="focus" class="page" style="display:none">
-    <div class="card">
-      <h3>Focus Timer</h3>
-      <div id="timer">25:00</div>
-      <button class="primary" onclick="startTimer()">Mulai Fokus</button>
-    </div>
-  </div>  <!-- MENTAL -->  <div id="mental" class="page" style="display:none">
-    <div class="card">
-      <h3>Curhat Anonim</h3>
-      <div class="chat" id="chat"></div>
-      <input id="chatInput" placeholder="Tulis isi pikiran..." onkeypress="if(event.key==='Enter') send()">
-    </div>
-  </div></div><script>
+<div class="small">Simpan di HP (Add to Home Screen) biar tiap hari dapet support.</div>
 
-// NAVIGATION
-function show(page){
-  document.querySelectorAll('.page').forEach(p=>p.style.display='none');
-  document.getElementById(page).style.display='block';
-}
+  </div>
+</div><script>
+// ===== DATA =====
+const quotes = [
+  "Capek itu pasti, berhenti itu pilihan.",
+  "Lu lagi berjuang, bukan gagal.",
+  "Pelan ga masalah, yang penting ga berhenti.",
+  "Orang lain santai, lu lagi bangun masa depan.",
+  "Hari berat bukan berarti hidup lu gagal.",
+  "Lu ga harus kuat terus, tapi jangan nyerah terus.",
+  "Kuliah berat, tapi lu lebih kuat.",
+  "Ga semua orang ngerti perjuangan lu, tapi lu tau kenapa lu mulai.",
+  "Sedikit hari ini > nol sama sekali.",
+  "Fokus 1 hal kecil, selesaiin. Itu udah menang."
+];
 
-// TASK SYSTEM (SAVE)
-let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-const taskInput = document.getElementById('taskInput');
+const gradients = [
+  ['#1e293b','#0f172a'],
+  ['#0f172a','#020617'],
+  ['#1f2937','#020617'],
+  ['#111827','#0b1220']
+];
 
-taskInput.addEventListener('keypress', e=>{
-  if(e.key==='Enter'){
-    tasks.push(taskInput.value);
-    localStorage.setItem('tasks',JSON.stringify(tasks));
-    taskInput.value='';
-    renderTask();
-  }
-});
+// ===== STATE (LOCAL) =====
+let opens = parseInt(localStorage.getItem('opens')||'0');
+let dayStart = localStorage.getItem('dayStart');
+let streak = parseInt(localStorage.getItem('streak')||'0');
 
-function renderTask(){
-  let html='';
-  tasks.forEach(t=> html+=`<p>- ${t}</p>`);
-  document.getElementById('taskList').innerHTML=html;
-}
-renderTask();
-
-// TIMER
-let time=1500, interval;
-function startTimer(){
-  clearInterval(interval);
-  interval=setInterval(()=>{
-    time--;
-    let m=Math.floor(time/60);
-    let s=time%60;
-    document.getElementById('timer').innerText=`${m}:${s<10?'0':''}${s}`;
-    if(time<=0){
-      clearInterval(interval);
-      updateStreak();
-    }
-  },1000);
-}
-
-// STREAK
-let streak = localStorage.getItem('streak') || 0;
-document.getElementById('streak').innerText = streak + " Hari";
-
-function updateStreak(){
-  streak++;
+const today = new Date().toDateString();
+if(dayStart !== today){
+  // new day
+  streak = (dayStart ? streak+1 : 1);
   localStorage.setItem('streak',streak);
-  document.getElementById('streak').innerText = streak + " Hari";
-  document.getElementById('status').innerText = "Hari produktif";
+  localStorage.setItem('dayStart',today);
 }
 
-// CHAT
-function send(){
-  let input=document.getElementById('chatInput');
-  let chat=document.getElementById('chat');
+opens++;
+localStorage.setItem('opens',opens);
 
-  chat.innerHTML += `<p>🧑 ${input.value}</p>`;
+function updateMeta(){
+  document.getElementById('meta').innerText = `Hari ke-${streak} • ${opens} kali buka`;
+}
+updateMeta();
+
+// ===== RENDER =====
+function pick(){
+  return quotes[Math.floor(Math.random()*quotes.length)];
+}
+
+function setBg(){
+  const g = gradients[Math.floor(Math.random()*gradients.length)];
+  document.body.style.background = `linear-gradient(135deg, ${g[0]}, ${g[1]})`;
+}
+
+function generate(){
+  const el = document.getElementById('quote');
+  el.classList.remove('show');
+  el.classList.add('fade');
 
   setTimeout(()=>{
-    chat.innerHTML += `<p>🤖 Lu capek bukan berarti lu gagal. Lanjut pelan aja.</p>`;
-    chat.scrollTop=chat.scrollHeight;
-  },700);
+    el.innerText = pick();
+    setBg();
+    el.classList.remove('fade');
+    el.classList.add('show');
+  },120);
+}
 
-  input.value='';
+// first load auto
+window.onload = ()=>{
+  generate();
+};
+
+// ===== ACTIONS =====
+function copyQuote(){
+  const text = document.getElementById('quote').innerText;
+  navigator.clipboard.writeText(text);
+  alert('Disalin 👍');
+}
+
+function shareQuote(){
+  const text = document.getElementById('quote').innerText;
+  if(navigator.share){
+    navigator.share({text});
+  } else {
+    copyQuote();
+  }
 }
 
 </script></body>
-      </html>
+</html>
