@@ -1,115 +1,138 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>System Breach</title>
+<title>Secure Access</title>
 
 <style>
 body {
-    margin: 0;
-    background: black;
-    color: #00ff00;
+    margin:0;
+    background: radial-gradient(circle, #050505, #000000);
+    color:#00ffcc;
     font-family: monospace;
-    overflow: hidden;
+    overflow:hidden;
 }
 
-#screen {
-    padding: 20px;
-    height: 100vh;
-    overflow-y: auto;
+#container {
+    padding:20px;
+}
+
+.line {
+    margin:5px 0;
+    opacity:0;
+    animation: fade 0.5s forwards;
+}
+
+@keyframes fade {
+    to {opacity:1;}
 }
 
 .glitch {
-    color: red;
+    color:red;
     animation: glitch 0.2s infinite;
 }
 
 @keyframes glitch {
-    0% {opacity:1;}
-    50% {opacity:0.3;}
-    100% {opacity:1;}
+    0%{opacity:1;}
+    50%{opacity:0.3;}
+    100%{opacity:1;}
 }
 
-button {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 12px 25px;
-    font-size: 16px;
-    background: red;
-    border: none;
-    color: white;
-    cursor: pointer;
-    border-radius: 8px;
+#progress {
+    width:100%;
+    height:10px;
+    background:#111;
+    margin-top:20px;
+    border-radius:10px;
+}
+
+#bar {
+    width:0%;
+    height:100%;
+    background:#00ffcc;
+    border-radius:10px;
+    transition:0.3s;
+}
+
+#startBtn {
+    position:absolute;
+    bottom:30px;
+    left:50%;
+    transform:translateX(-50%);
+    padding:12px 25px;
+    background:#00ffcc;
+    border:none;
+    color:black;
+    border-radius:10px;
+    cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
-<div id="screen"></div>
-<button onclick="startHack()">INITIATE SYSTEM</button>
+<div id="container"></div>
 
-<audio id="sound" src="https://www.soundjay.com/button/beep-07.wav"></audio>
+<div id="progress"><div id="bar"></div></div>
+
+<button id="startBtn" onclick="start()">START SYSTEM</button>
 
 <script>
-let clicked = false;
+let c = document.getElementById("container");
+let bar = document.getElementById("bar");
 
-function typeText(text, speed = 30) {
-    return new Promise(resolve => {
-        let i = 0;
-        let screen = document.getElementById("screen");
-
-        function typing() {
-            if (i < text.length) {
-                screen.innerHTML += text.charAt(i);
-                i++;
-                setTimeout(typing, speed);
-            } else {
-                screen.innerHTML += "<br>";
-                resolve();
-            }
-        }
-        typing();
-    });
+function addLine(text, cls=""){
+    let d = document.createElement("div");
+    d.className="line "+cls;
+    d.innerText=text;
+    c.appendChild(d);
 }
 
-async function startHack() {
-    if(clicked) return alert("SYSTEM LOCKED. WAIT 24 HOURS.");
-    clicked = true;
+function delay(ms){ return new Promise(r=>setTimeout(r,ms)); }
 
-    document.querySelector("button").style.display = "none";
-    document.getElementById("sound").play();
+async function start(){
+    document.getElementById("startBtn").style.display="none";
 
-    let nomor = prompt("Masukkan target (nomor HP):") || "UNKNOWN";
+    let target = prompt("Masukkan target:") || "UNKNOWN";
 
-    await typeText("Connecting to satellite...");
-    await typeText("Bypassing firewall...");
-    await typeText("Injecting payload...");
-    await typeText("Target detected: " + nomor);
+    let steps = [
+        "Menghubungkan ke server...",
+        "Validasi target: "+target,
+        "Melewati firewall...",
+        "Injecting system...",
+        "Scanning database...",
+        "Mengakses modul sistem...",
+        "Decrypting data...",
+        "Sinkronisasi node...",
+        "Finalizing access..."
+    ];
 
-    await typeText("Scanning device...");
-    await typeText("Accessing WhatsApp database...");
-    await typeText("Decrypting messages...");
+    for(let i=0;i<steps.length;i++){
+        addLine(steps[i]);
+        bar.style.width = ((i+1)/steps.length*100)+"%";
+        await delay(700);
+    }
 
-    await typeText("⚠️ WARNING: TRACE DETECTED ⚠️", 20);
+    addLine("⚠️ AKSES INTI TERBUKA ⚠️","glitch");
+    await delay(1500);
 
-    document.getElementById("screen").classList.add("glitch");
+    addLine("Mengambil data sensitif...");
+    await delay(1000);
 
-    await typeText("IP LOCATION FOUND");
-    await typeText("Uploading data to server...");
+    addLine("Mengirim ke server pusat...");
+    await delay(1200);
 
-    await typeText("✔ ACCESS GRANTED", 50);
+    addLine("✔ SELESAI");
+    await delay(1000);
 
-    await typeText("Downloading private data...");
-    await typeText("Camera access: ENABLED");
-    await typeText("Microphone access: ENABLED");
+    // PLOT TWIST
+    addLine("");
+    addLine("😈 Santai bro...");
+    addLine("Ini cuma prank wkwk 🤣");
+    addLine("Ga ada data yang diambil.");
 
-    await typeText("SYSTEM BREACHED SUCCESSFULLY");
-
-    await typeText("😈 YOU ARE BEING WATCHED 😈", 80);
 }
 </script>
 
