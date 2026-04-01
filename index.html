@@ -1,140 +1,174 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Secure Access</title>
+<title>Secure Node</title>
 
 <style>
-body {
+body{
     margin:0;
-    background: radial-gradient(circle, #050505, #000000);
+    background:#000;
     color:#00ffcc;
-    font-family: monospace;
+    font-family:monospace;
     overflow:hidden;
 }
 
-#container {
+#app{
     padding:20px;
 }
 
-.line {
-    margin:5px 0;
-    opacity:0;
-    animation: fade 0.5s forwards;
+.line{
+    margin:3px 0;
+    animation:fade .3s;
 }
 
-@keyframes fade {
-    to {opacity:1;}
+@keyframes fade{
+    from{opacity:0;}
+    to{opacity:1;}
 }
 
-.glitch {
-    color:red;
-    animation: glitch 0.2s infinite;
+.red{color:red;}
+.yellow{color:yellow;}
+.green{color:#00ffcc;}
+
+.glitch{
+    animation:glitch .15s infinite;
 }
 
-@keyframes glitch {
+@keyframes glitch{
     0%{opacity:1;}
-    50%{opacity:0.3;}
+    50%{opacity:.3;}
     100%{opacity:1;}
-}
-
-#progress {
-    width:100%;
-    height:10px;
-    background:#111;
-    margin-top:20px;
-    border-radius:10px;
-}
-
-#bar {
-    width:0%;
-    height:100%;
-    background:#00ffcc;
-    border-radius:10px;
-    transition:0.3s;
-}
-
-#startBtn {
-    position:absolute;
-    bottom:30px;
-    left:50%;
-    transform:translateX(-50%);
-    padding:12px 25px;
-    background:#00ffcc;
-    border:none;
-    color:black;
-    border-radius:10px;
-    cursor:pointer;
 }
 </style>
 </head>
 
 <body>
-
-<div id="container"></div>
-
-<div id="progress"><div id="bar"></div></div>
-
-<button id="startBtn" onclick="start()">START SYSTEM</button>
+<div id="app"></div>
 
 <script>
-let c = document.getElementById("container");
-let bar = document.getElementById("bar");
+const app = document.getElementById("app");
 
-function addLine(text, cls=""){
-    let d = document.createElement("div");
+function line(t,cls=""){
+    let d=document.createElement("div");
     d.className="line "+cls;
-    d.innerText=text;
-    c.appendChild(d);
+    d.innerText=t;
+    app.appendChild(d);
+    app.scrollTop = app.scrollHeight;
 }
 
-function delay(ms){ return new Promise(r=>setTimeout(r,ms)); }
+function wait(ms){return new Promise(r=>setTimeout(r,ms));}
 
-async function start(){
-    document.getElementById("startBtn").style.display="none";
+// random generator biar keliatan real
+function rand(arr){
+    return arr[Math.floor(Math.random()*arr.length)];
+}
 
-    let target = prompt("Masukkan target:") || "UNKNOWN";
+function fakeIP(){
+    return `${rand([36,182,103,114])}.${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*255)}`;
+}
 
-    let steps = [
-        "Menghubungkan ke server...",
-        "Validasi target: "+target,
-        "Melewati firewall...",
-        "Injecting system...",
-        "Scanning database...",
-        "Mengakses modul sistem...",
-        "Decrypting data...",
-        "Sinkronisasi node...",
-        "Finalizing access..."
-    ];
-
-    for(let i=0;i<steps.length;i++){
-        addLine(steps[i]);
-        bar.style.width = ((i+1)/steps.length*100)+"%";
-        await delay(700);
+// sequence engine
+async function seq(title, steps, speed=400){
+    line(">> "+title,"yellow");
+    for(let s of steps){
+        line(s);
+        await wait(speed + Math.random()*300);
     }
-
-    addLine("⚠️ AKSES INTI TERBUKA ⚠️","glitch");
-    await delay(1500);
-
-    addLine("Mengambil data sensitif...");
-    await delay(1000);
-
-    addLine("Mengirim ke server pusat...");
-    await delay(1200);
-
-    addLine("✔ SELESAI");
-    await delay(1000);
-
-    // PLOT TWIST
-    addLine("");
-    addLine("😈 Santai bro...");
-    addLine("Ini cuma prank wkwk 🤣");
-    addLine("Ga ada data yang diambil.");
-
+    line("✔ DONE","green");
+    await wait(500);
 }
-</script>
 
+// MAIN FLOW
+async function run(){
+
+    line("BOOTING SYSTEM...");
+    await wait(800);
+
+    await seq("INITIALIZING CORE",[
+        "Loading kernel module...",
+        "Mounting virtual nodes...",
+        "Syncing memory blocks..."
+    ]);
+
+    await seq("NETWORK SCAN",[
+        "Detecting interface...",
+        "Assigning IP...",
+        "IP: "+fakeIP(),
+        "Gateway resolved",
+        "Pinging nodes..."
+    ]);
+
+    await seq("DEVICE ANALYSIS",[
+        "Reading device signature...",
+        "OS detected: Android",
+        "Browser engine: Chromium",
+        "User fingerprint matched"
+    ]);
+
+    await seq("SECURITY BYPASS",[
+        "Checking firewall...",
+        "Injecting bypass...",
+        "Escalating privilege...",
+        "Root access simulated"
+    ]);
+
+    await seq("DATA EXTRACTION",[
+        "Scanning storage...",
+        "Indexing media...",
+        "Locating chat database...",
+        "Extracting metadata..."
+    ],300);
+
+    // mulai naik tensi
+    line("⚠️ ANOMALY DETECTED ⚠️","red glitch");
+    await wait(1200);
+
+    await seq("TRACE SYSTEM",[
+        "Reverse tracking initiated...",
+        "Cross-referencing nodes...",
+        "Target lock acquired"
+    ],250);
+
+    line("USER IDENTIFIED","red");
+    await wait(800);
+
+    await seq("UPLOAD PROCESS",[
+        "Compressing data...",
+        "Encrypting packets...",
+        "Sending to remote server..."
+    ],200);
+
+    // peak panic
+    line("⚠️ FULL ACCESS GRANTED ⚠️","red glitch");
+    await wait(1500);
+
+    line("Monitoring activity...");
+    await wait(800);
+    line("Recording session...");
+    await wait(800);
+
+    // twist pelan
+    await wait(1500);
+
+    line("");
+    line("...");
+    await wait(1000);
+
+    line("😈 Santai bro...");
+    await wait(1000);
+
+    line("Lu ga lagi di-hack.");
+    await wait(1000);
+
+    line("Ini cuma prank 🤣");
+    await wait(1000);
+
+    line("Tapi tadi sempet panik kan?");
+}
+
+run();
+</script>
 </body>
 </html>
