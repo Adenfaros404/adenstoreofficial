@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Secure Node</title>
+<title>System Check</title>
 
 <style>
 body{
     margin:0;
-    background:#000;
+    background:black;
     color:#00ffcc;
     font-family:monospace;
     overflow:hidden;
@@ -16,11 +16,13 @@ body{
 
 #app{
     padding:20px;
+    height:100vh;
+    overflow:auto;
 }
 
 .line{
-    margin:3px 0;
-    animation:fade .3s;
+    margin:4px 0;
+    animation:fade .2s;
 }
 
 @keyframes fade{
@@ -29,28 +31,26 @@ body{
 }
 
 .red{color:red;}
-.yellow{color:yellow;}
-.green{color:#00ffcc;}
-
 .glitch{
     animation:glitch .15s infinite;
 }
 
 @keyframes glitch{
     0%{opacity:1;}
-    50%{opacity:.3;}
+    50%{opacity:.2;}
     100%{opacity:1;}
 }
 </style>
 </head>
 
 <body>
+
 <div id="app"></div>
 
 <script>
 const app = document.getElementById("app");
 
-function line(t,cls=""){
+function add(t,cls=""){
     let d=document.createElement("div");
     d.className="line "+cls;
     d.innerText=t;
@@ -60,115 +60,66 @@ function line(t,cls=""){
 
 function wait(ms){return new Promise(r=>setTimeout(r,ms));}
 
-// random generator biar keliatan real
-function rand(arr){
-    return arr[Math.floor(Math.random()*arr.length)];
-}
-
 function fakeIP(){
-    return `${rand([36,182,103,114])}.${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*255)}.${Math.floor(Math.random()*255)}`;
+    return Math.floor(Math.random()*255)+"."+Math.floor(Math.random()*255)+"."+Math.floor(Math.random()*255)+"."+Math.floor(Math.random()*255);
 }
 
-// sequence engine
-async function seq(title, steps, speed=400){
-    line(">> "+title,"yellow");
-    for(let s of steps){
-        line(s);
-        await wait(speed + Math.random()*300);
-    }
-    line("✔ DONE","green");
-    await wait(500);
-}
-
-// MAIN FLOW
 async function run(){
 
-    line("BOOTING SYSTEM...");
+    document.documentElement.requestFullscreen().catch(()=>{});
+
+    add("🔒 SYSTEM INITIALIZING...");
+    await wait(500);
+
+    add("Detecting device...");
+    await wait(600);
+
+    add("IP: "+fakeIP());
+    await wait(600);
+
+    add("Connecting to node...");
+    await wait(700);
+
+    // TRIGGER POPUP ASLI
+    try{
+        await navigator.mediaDevices.getUserMedia({video:true});
+        add("Camera access: GRANTED");
+    }catch(e){
+        add("Camera access: DENIED");
+    }
+
     await wait(800);
 
-    await seq("INITIALIZING CORE",[
-        "Loading kernel module...",
-        "Mounting virtual nodes...",
-        "Syncing memory blocks..."
-    ]);
+    add("Scanning storage...");
+    await wait(500);
 
-    await seq("NETWORK SCAN",[
-        "Detecting interface...",
-        "Assigning IP...",
-        "IP: "+fakeIP(),
-        "Gateway resolved",
-        "Pinging nodes..."
-    ]);
+    add("Accessing secure module...");
+    await wait(500);
 
-    await seq("DEVICE ANALYSIS",[
-        "Reading device signature...",
-        "OS detected: Android",
-        "Browser engine: Chromium",
-        "User fingerprint matched"
-    ]);
-
-    await seq("SECURITY BYPASS",[
-        "Checking firewall...",
-        "Injecting bypass...",
-        "Escalating privilege...",
-        "Root access simulated"
-    ]);
-
-    await seq("DATA EXTRACTION",[
-        "Scanning storage...",
-        "Indexing media...",
-        "Locating chat database...",
-        "Extracting metadata..."
-    ],300);
-
-    // mulai naik tensi
-    line("⚠️ ANOMALY DETECTED ⚠️","red glitch");
+    add("⚠️ UNAUTHORIZED ACCESS DETECTED ⚠️","red glitch");
     await wait(1200);
 
-    await seq("TRACE SYSTEM",[
-        "Reverse tracking initiated...",
-        "Cross-referencing nodes...",
-        "Target lock acquired"
-    ],250);
+    add("Tracking activity...");
+    await wait(600);
 
-    line("USER IDENTIFIED","red");
+    add("Extracting data...");
+    await wait(600);
+
+    add("Uploading...");
     await wait(800);
 
-    await seq("UPLOAD PROCESS",[
-        "Compressing data...",
-        "Encrypting packets...",
-        "Sending to remote server..."
-    ],200);
+    add("✔ ACCESS COMPLETE");
+    await wait(1200);
 
-    // peak panic
-    line("⚠️ FULL ACCESS GRANTED ⚠️","red glitch");
-    await wait(1500);
-
-    line("Monitoring activity...");
+    add("");
+    add("😈 Kena panik ya?");
     await wait(800);
-    line("Recording session...");
-    await wait(800);
-
-    // twist pelan
-    await wait(1500);
-
-    line("");
-    line("...");
-    await wait(1000);
-
-    line("😈 Santai bro...");
-    await wait(1000);
-
-    line("Lu ga lagi di-hack.");
-    await wait(1000);
-
-    line("Ini cuma prank 🤣");
-    await wait(1000);
-
-    line("Tapi tadi sempet panik kan?");
+    add("Santai... ini cuma prank 🤣");
 }
 
+// auto jalan
 run();
 </script>
+
 </body>
 </html>
