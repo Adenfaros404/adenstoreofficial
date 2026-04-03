@@ -2,178 +2,176 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Anime Love Checker</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Jodoh Finder</title>
 
 <style>
 body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background: url('https://wallpaperaccess.com/full/2213426.jpg') no-repeat center/cover;
-    color: white;
-    text-align: center;
-    overflow-x: hidden;
+    margin:0;
+    font-family:Poppins;
+    background: linear-gradient(135deg,#ff9a9e,#a18cd1);
+    color:white;
+    text-align:center;
 }
 
-/* overlay biar readable */
-body::before {
-    content: "";
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.5);
-    top: 0;
-    left: 0;
-}
-
-/* card */
 .container {
-    position: relative;
-    margin-top: 80px;
-    z-index: 2;
+    padding:20px;
+    margin-top:50px;
 }
 
 .card {
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(12px);
-    padding: 20px;
-    border-radius: 20px;
-    display: inline-block;
-    box-shadow: 0 0 30px pink;
-    animation: fadeIn 1.5s;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    border-radius:20px;
+    padding:20px;
 }
 
 input {
-    padding: 10px;
-    margin: 5px;
-    width: 250px;
-    border-radius: 10px;
-    border: none;
+    width:90%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    margin:10px 0;
 }
 
 button {
-    padding: 10px 20px;
-    border-radius: 20px;
-    border: none;
-    background: pink;
-    cursor: pointer;
-    transition: 0.3s;
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:20px;
+    background:white;
+    color:purple;
+    font-weight:bold;
 }
 
-button:hover {
-    transform: scale(1.1);
+#hasil img {
+    width:120px;
+    border-radius:50%;
+    margin-top:10px;
 }
 
-#hasil {
-    margin-top: 20px;
+.bar {
+    height:5px;
+    width:0%;
+    background:pink;
+    transition:2s;
 }
 
-/* animasi */
-@keyframes fadeIn {
-    from {opacity:0; transform: translateY(30px);}
-    to {opacity:1; transform: translateY(0);}
-}
-
+/* love animation */
 .heart {
-    position: fixed;
-    bottom: -20px;
-    font-size: 20px;
-    animation: naik 5s linear infinite;
+    position:fixed;
+    bottom:-10px;
+    font-size:18px;
+    animation:up 5s linear infinite;
 }
 
-@keyframes naik {
-    0% {transform: translateY(0); opacity:1;}
-    100% {transform: translateY(-800px); opacity:0;}
-}
-
-/* glitch effect */
-.glitch {
-    animation: glitch 0.3s;
-}
-
-@keyframes glitch {
-    0% {transform: translate(0);}
-    20% {transform: translate(-3px,3px);}
-    40% {transform: translate(3px,-3px);}
-    60% {transform: translate(-3px,3px);}
-    100% {transform: translate(0);}
+@keyframes up {
+    0% {transform:translateY(0);opacity:1;}
+    100% {transform:translateY(-800px);opacity:0;}
 }
 </style>
 </head>
 
 <body>
 
-<audio autoplay loop>
-    <source src="https://files.catbox.moe/6q7v9p.mp3" type="audio/mp3">
+<!-- sound -->
+<audio id="sound">
+<source src="https://files.catbox.moe/6q7v9p.mp3" type="audio/mp3">
 </audio>
 
 <div class="container">
-    <div class="card" id="card">
-        <h2>💖 Anime Love Checker 💖</h2>
+<div class="card">
 
-        <input id="nama1" placeholder="Nama kamu"><br>
-        <input id="nama2" placeholder="Nama dia"><br>
+<h2>💖 AI Cari Jodohmu 💖</h2>
+<p id="counter">👥 1,284 orang lagi cek jodoh...</p>
 
-        <button onclick="cek()">Cek Jodoh</button>
+<input id="nama" placeholder="Masukkan nama kamu">
+<button onclick="scan()">Cari Sekarang</button>
 
-        <div id="hasil"></div>
-        <br>
-        <button onclick="shareWA()">Share ke WA</button>
-    </div>
+<div class="bar" id="bar"></div>
+<div id="hasil"></div>
+
+<button onclick="shareWA()">Share ke WA</button>
+
+</div>
 </div>
 
 <script>
-function rand(arr){
-    return arr[Math.floor(Math.random()*arr.length)];
+let namaList = ["Alya","Nadia","Salsa","Rina","Dinda","Putri","Lala"];
+let sifat = [
+"Dia sabar tapi overthinking.",
+"Dia setia tapi butuh diyakinkan.",
+"Dia cuek tapi perhatian.",
+"Dia kuat tapi sering menyembunyikan perasaan."
+];
+
+let foto = [
+"https://i.pinimg.com/564x/9c/6b/ae/9c6bae0a.jpg",
+"https://i.pinimg.com/564x/a5/11/33/a51133a.jpg",
+"https://i.pinimg.com/564x/fc/2b/45/fc2b45a.jpg"
+];
+
+function hashNama(nama){
+    let h=0;
+    for(let i=0;i<nama.length;i++){
+        h += nama.charCodeAt(i);
+    }
+    return h;
 }
 
-function cek(){
-    let n1 = document.getElementById("nama1").value;
-    let n2 = document.getElementById("nama2").value;
+function scan(){
+    let nama = document.getElementById("nama").value;
     let hasil = document.getElementById("hasil");
-    let card = document.getElementById("card");
+    let bar = document.getElementById("bar");
+    let sound = document.getElementById("sound");
 
-    let persen = Math.floor(Math.random()*100);
+    sound.play();
 
-    let kata = [
-        "Kalian cocok, tapi ego sering jadi penghalang.",
-        "Hubungan ini kuat, asal saling ngerti.",
-        "Banyak rasa, tapi belum tentu bisa bersama.",
-        "Diam-diam saling suka, tapi gengsi.",
-        "Saling butuh, tapi sering menyakiti."
-    ];
+    hasil.innerHTML = "🔍 AI sedang mencari pasangan terbaik...";
+    bar.style.width = "100%";
 
-    hasil.innerHTML = `
-    <p><b>${n1} ❤️ ${n2}</b></p>
-    <p>Love: ${persen}%</p>
-    <p><i>"${rand(kata)}"</i></p>
-    `;
+    let h = hashNama(nama);
 
-    glitchEffect(card);
-    spawnLove();
+    setTimeout(()=>{
+        let pasangan = namaList[h % namaList.length];
+        let persen = (h % 50) + 50; // biar minimal 50%
+        let sifatOut = sifat[h % sifat.length];
+        let fotoOut = foto[h % foto.length];
+
+        hasil.innerHTML = `
+        <h3>${pasangan}</h3>
+        <img src="${fotoOut}">
+        <p>Kecocokan: ${persen}%</p>
+        <p>${sifatOut}</p>
+        `;
+
+        spawnLove();
+    },2000);
 }
 
 function spawnLove(){
-    for(let i=0;i<15;i++){
+    for(let i=0;i<10;i++){
         let h = document.createElement("div");
-        h.className = "heart";
-        h.innerHTML = "💖";
-        h.style.left = Math.random()*100 + "vw";
+        h.className="heart";
+        h.innerHTML="💖";
+        h.style.left=Math.random()*100+"vw";
         document.body.appendChild(h);
 
         setTimeout(()=>h.remove(),5000);
     }
 }
 
-function glitchEffect(el){
-    el.classList.add("glitch");
-    setTimeout(()=>el.classList.remove("glitch"),300);
-}
-
 function shareWA(){
     let text = document.getElementById("hasil").innerText;
-    let link = "https://wa.me/?text=" + encodeURIComponent(text);
-    window.open(link);
+    window.open("https://wa.me/?text="+encodeURIComponent(text));
 }
+
+/* fake counter */
+setInterval(()=>{
+    let el = document.getElementById("counter");
+    let num = Math.floor(Math.random()*2000)+1000;
+    el.innerText = "👥 "+num+" orang lagi cek jodoh...";
+},3000);
 </script>
 
 </body>
