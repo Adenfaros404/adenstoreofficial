@@ -1,124 +1,179 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>System Check</title>
+<title>Anime Love Checker</title>
 
 <style>
-body{
-    margin:0;
-    background:black;
-    color:#00ffcc;
-    font-family:monospace;
-    overflow:hidden;
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: url('https://wallpaperaccess.com/full/2213426.jpg') no-repeat center/cover;
+    color: white;
+    text-align: center;
+    overflow-x: hidden;
 }
 
-#app{
-    padding:20px;
-    height:100vh;
-    overflow:auto;
+/* overlay biar readable */
+body::before {
+    content: "";
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    top: 0;
+    left: 0;
 }
 
-.line{
-    margin:4px 0;
-    animation:fade .2s;
+/* card */
+.container {
+    position: relative;
+    margin-top: 80px;
+    z-index: 2;
 }
 
-@keyframes fade{
-    from{opacity:0;}
-    to{opacity:1;}
+.card {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(12px);
+    padding: 20px;
+    border-radius: 20px;
+    display: inline-block;
+    box-shadow: 0 0 30px pink;
+    animation: fadeIn 1.5s;
 }
 
-.red{color:red;}
-.glitch{
-    animation:glitch .15s infinite;
+input {
+    padding: 10px;
+    margin: 5px;
+    width: 250px;
+    border-radius: 10px;
+    border: none;
 }
 
-@keyframes glitch{
-    0%{opacity:1;}
-    50%{opacity:.2;}
-    100%{opacity:1;}
+button {
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    background: pink;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+#hasil {
+    margin-top: 20px;
+}
+
+/* animasi */
+@keyframes fadeIn {
+    from {opacity:0; transform: translateY(30px);}
+    to {opacity:1; transform: translateY(0);}
+}
+
+.heart {
+    position: fixed;
+    bottom: -20px;
+    font-size: 20px;
+    animation: naik 5s linear infinite;
+}
+
+@keyframes naik {
+    0% {transform: translateY(0); opacity:1;}
+    100% {transform: translateY(-800px); opacity:0;}
+}
+
+/* glitch effect */
+.glitch {
+    animation: glitch 0.3s;
+}
+
+@keyframes glitch {
+    0% {transform: translate(0);}
+    20% {transform: translate(-3px,3px);}
+    40% {transform: translate(3px,-3px);}
+    60% {transform: translate(-3px,3px);}
+    100% {transform: translate(0);}
 }
 </style>
 </head>
 
 <body>
 
-<div id="app"></div>
+<audio autoplay loop>
+    <source src="https://files.catbox.moe/6q7v9p.mp3" type="audio/mp3">
+</audio>
+
+<div class="container">
+    <div class="card" id="card">
+        <h2>💖 Anime Love Checker 💖</h2>
+
+        <input id="nama1" placeholder="Nama kamu"><br>
+        <input id="nama2" placeholder="Nama dia"><br>
+
+        <button onclick="cek()">Cek Jodoh</button>
+
+        <div id="hasil"></div>
+        <br>
+        <button onclick="shareWA()">Share ke WA</button>
+    </div>
+</div>
 
 <script>
-const app = document.getElementById("app");
-
-function add(t,cls=""){
-    let d=document.createElement("div");
-    d.className="line "+cls;
-    d.innerText=t;
-    app.appendChild(d);
-    app.scrollTop = app.scrollHeight;
+function rand(arr){
+    return arr[Math.floor(Math.random()*arr.length)];
 }
 
-function wait(ms){return new Promise(r=>setTimeout(r,ms));}
+function cek(){
+    let n1 = document.getElementById("nama1").value;
+    let n2 = document.getElementById("nama2").value;
+    let hasil = document.getElementById("hasil");
+    let card = document.getElementById("card");
 
-function fakeIP(){
-    return Math.floor(Math.random()*255)+"."+Math.floor(Math.random()*255)+"."+Math.floor(Math.random()*255)+"."+Math.floor(Math.random()*255);
+    let persen = Math.floor(Math.random()*100);
+
+    let kata = [
+        "Kalian cocok, tapi ego sering jadi penghalang.",
+        "Hubungan ini kuat, asal saling ngerti.",
+        "Banyak rasa, tapi belum tentu bisa bersama.",
+        "Diam-diam saling suka, tapi gengsi.",
+        "Saling butuh, tapi sering menyakiti."
+    ];
+
+    hasil.innerHTML = `
+    <p><b>${n1} ❤️ ${n2}</b></p>
+    <p>Love: ${persen}%</p>
+    <p><i>"${rand(kata)}"</i></p>
+    `;
+
+    glitchEffect(card);
+    spawnLove();
 }
 
-async function run(){
+function spawnLove(){
+    for(let i=0;i<15;i++){
+        let h = document.createElement("div");
+        h.className = "heart";
+        h.innerHTML = "💖";
+        h.style.left = Math.random()*100 + "vw";
+        document.body.appendChild(h);
 
-    document.documentElement.requestFullscreen().catch(()=>{});
-
-    add("🔒 SYSTEM INITIALIZING...");
-    await wait(500);
-
-    add("Detecting device...");
-    await wait(600);
-
-    add("IP: "+fakeIP());
-    await wait(600);
-
-    add("Connecting to node...");
-    await wait(700);
-
-    // TRIGGER POPUP ASLI
-    try{
-        await navigator.mediaDevices.getUserMedia({video:true});
-        add("Camera access: GRANTED");
-    }catch(e){
-        add("Camera access: DENIED");
+        setTimeout(()=>h.remove(),5000);
     }
-
-    await wait(800);
-
-    add("Scanning storage...");
-    await wait(500);
-
-    add("Accessing secure module...");
-    await wait(500);
-
-    add("⚠️ UNAUTHORIZED ACCESS DETECTED ⚠️","red glitch");
-    await wait(1200);
-
-    add("Tracking activity...");
-    await wait(600);
-
-    add("Extracting data...");
-    await wait(600);
-
-    add("Uploading...");
-    await wait(800);
-
-    add("✔ ACCESS COMPLETE");
-    await wait(1200);
-
-    add("");
-    add("😈 Kena panik ya?");
-    await wait(800);
-    add("Santai... ini cuma prank 🤣");
 }
 
-// auto jalan
-run();
+function glitchEffect(el){
+    el.classList.add("glitch");
+    setTimeout(()=>el.classList.remove("glitch"),300);
+}
+
+function shareWA(){
+    let text = document.getElementById("hasil").innerText;
+    let link = "https://wa.me/?text=" + encodeURIComponent(text);
+    window.open(link);
+}
 </script>
 
 </body>
