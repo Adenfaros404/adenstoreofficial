@@ -1,222 +1,219 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Scan Kodam</title>
+<title>Aden Teman Ku</title>
 
 <style>
 body {
-    margin:0;
-    font-family:Poppins;
-    color:#00ffcc;
-    text-align:center;
-    background: url('https://images.unsplash.com/photo-1519681393784-d120267933ba') no-repeat center/cover;
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: radial-gradient(circle at top, #3b2f2f, #1a1a1a);
+    color: #f5e6d3;
+    overflow-x: hidden;
 }
 
-/* overlay */
-body::before {
-    content:"";
-    position:fixed;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.7);
-    top:0;
-    left:0;
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
 }
 
-/* container */
 .container {
-    max-width:400px;
-    margin:auto;
-    margin-top:60px;
-    position:relative;
-    z-index:2;
+    max-width: 800px;
+    margin: auto;
+    padding: 40px 20px;
 }
 
-.card {
-    background: rgba(0,255,200,0.08);
-    backdrop-filter: blur(12px);
-    border-radius:20px;
-    padding:20px;
-    box-shadow: 0 0 30px rgba(0,255,200,0.3);
+h1 {
+    text-align: center;
+    color: #ffd6a5;
 }
 
-input {
-    width:90%;
-    padding:12px;
-    margin:8px;
-    border:none;
-    border-radius:10px;
+.story {
+    font-size: 16px;
+    white-space: pre-line;
+    min-height: 200px;
 }
 
 button {
-    width:100%;
-    padding:12px;
-    border:none;
-    border-radius:20px;
-    background:#00ffcc;
-    color:black;
-    font-weight:bold;
-    cursor:pointer;
+    margin: 10px;
+    padding: 10px 20px;
+    border: none;
+    background: #d4a373;
+    color: #2c2c2c;
+    border-radius: 10px;
+    cursor: pointer;
 }
 
-#hasil {
-    margin-top:20px;
+.progress {
+    height: 5px;
+    background: #333;
+    margin-bottom: 20px;
 }
 
-.bar {
-    height:5px;
-    width:0%;
-    background:#00ffcc;
-    transition:2s;
+.progress-bar {
+    height: 5px;
+    width: 0%;
+    background: #ffd6a5;
+    transition: 0.5s;
 }
 
-/* animasi love */
-.heart {
-    position:fixed;
-    bottom:-10px;
-    font-size:18px;
-    animation:up 5s linear infinite;
+.cta {
+    text-align: center;
+    margin-top: 40px;
+    display: none;
 }
 
-@keyframes up {
-    0% {transform:translateY(0);opacity:1;}
-    100% {transform:translateY(-800px);opacity:0;}
-}
-
-/* watermark */
-.watermark {
-    margin-top:20px;
-    font-size:12px;
-    opacity:0.6;
+.cta a {
+    display: inline-block;
+    padding: 12px 25px;
+    background: #25D366;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-weight: bold;
 }
 </style>
 </head>
 
 <body>
 
-<audio id="sound">
-<source src="https://files.catbox.moe/6q7v9p.mp3" type="audio/mp3">
-</audio>
+<canvas id="rain"></canvas>
 
 <div class="container">
-<div class="card">
 
-<h2>⚡ AI Scan Energi & Kodam ⚡</h2>
+<h1>Aden Teman Ku</h1>
 
-<p id="liveUser">👥 1,234 orang sedang menggunakan</p>
+<div class="progress">
+    <div class="progress-bar" id="bar"></div>
+</div>
 
-<input id="nama" placeholder="Nama lengkap">
-<input type="date" id="tgl">
+<div class="story" id="story"></div>
 
-<button onclick="scan()">Mulai Analisa</button>
+<div id="choices"></div>
 
-<div class="bar" id="bar"></div>
+<button onclick="lanjut()">Lanjut</button>
 
-<div id="hasil"></div>
-
-<p class="watermark">karya web. Mas AdenGanteng</p>
+<div class="cta" id="cta">
+    <p>Kalau lu sampai sini… berarti lu paham satu hal.</p>
+    <p>Bukan soal kuota. Tapi siapa yang pegang sistemnya.</p>
+    <a href="https://wa.me/6283878348853?text=Gue%20mau%20kuota%20Akbar">Hubungi Aden</a>
+</div>
 
 </div>
-</div>
+
+<audio id="bgm" loop>
+<source src="https://cdn.pixabay.com/audio/2023/03/14/audio_5f9c92b9d2.mp3" type="audio/mpeg">
+</audio>
 
 <script>
-let kodam = ["Naga Hitam","Macan Bayangan","Serigala Malam","Garuda Emas"];
-let sifat = [
-"Protektif tapi emosional.",
-"Kuat tapi sulit dikendalikan.",
-"Tenang tapi mematikan.",
-"Setia tapi mudah terpancing."
+
+// autoplay
+document.body.addEventListener('click', () => {
+    document.getElementById("bgm").play();
+}, { once: true });
+
+let part = 0;
+let choice = 0;
+
+const cerita = [
+"Aden bukan sekadar orang jualan.\n\nDia orang yang lagi bangun sesuatu.",
+"Yang orang lihat cuma transaksi.\n\nYang gak mereka lihat: sistem di belakangnya.",
+"Dia kerja saat yang lain santai.\n\nDan itu bukan gaya… itu strategi.",
+"Masalahnya cuma satu:\napakah dia cukup tahan?",
+"Karena dunia ini bukan soal cepat.\n\nTapi siapa yang bertahan.",
+"Dan kalau lu baca ini sampai sini…",
+"Berarti lu beda.\n\nLu bukan tipe yang asal lewat.",
+"Lu tipe yang mikir."
 ];
 
-function hash(nama,tgl){
-    let val = nama.length + new Date(tgl).getDate();
-    return val;
-}
-
-/* LIMIT 3x */
-function cekLimit(){
-    let today = new Date().toDateString();
-    let data = JSON.parse(localStorage.getItem("limitKodam")) || {};
-
-    if(data.date !== today){
-        data = {date: today, count: 0};
-    }
-
-    if(data.count >= 3){
-        return false;
-    }
-
-    data.count++;
-    localStorage.setItem("limitKodam", JSON.stringify(data));
-    return true;
-}
-
-function scan(){
-    let hasil = document.getElementById("hasil");
-    let bar = document.getElementById("bar");
-    let sound = document.getElementById("sound");
-
-    if(!cekLimit()){
-        hasil.innerHTML = `
-        <h3>⚠️ Batas Analisa Habis</h3>
-        <p>Sistem mendeteksi energi kamu belum stabil.</p>
-        <p>Kamu bisa menunggu reset besok atau lanjutkan via akses khusus.</p>
-
-        <a href="https://wa.me/6283878348853?text=Halo%20saya%20mau%20lanjut%20scan%20kodam"
-        style="display:inline-block;margin-top:10px;padding:10px 20px;
-        background:#00ffcc;color:black;border-radius:20px;text-decoration:none;">
-        ⚡ Lanjut via WhatsApp
-        </a>
-        `;
-        return;
-    }
-
-    let nama = document.getElementById("nama").value;
-    let tgl = document.getElementById("tgl").value;
-
-    sound.play();
-
-    hasil.innerHTML = "🔍 Menganalisa energi...";
-    bar.style.width = "100%";
-
-    setTimeout(()=>{
-        let h = hash(nama,tgl);
-
-        let k = kodam[h % kodam.length];
-        let s = sifat[h % sifat.length];
-
-        hasil.innerHTML = `
-        <h3>${k}</h3>
-        <p>Tipe: Penjaga Energi</p>
-        <p>Sifat: ${s}</p>
-        <p><i>"Energi ini kuat, tapi jika tidak dikendalikan bisa berbalik menyerang dirimu."</i></p>
-        `;
-
-        spawnLove();
-    },2000);
-}
-
-/* animasi */
-function spawnLove(){
-    for(let i=0;i<8;i++){
-        let h = document.createElement("div");
-        h.className="heart";
-        h.innerHTML="💖";
-        h.style.left=Math.random()*100+"vw";
-        document.body.appendChild(h);
-
-        setTimeout(()=>h.remove(),5000);
+function typeWriter(text, i = 0) {
+    if (i < text.length) {
+        document.getElementById("story").innerHTML += text.charAt(i);
+        setTimeout(() => typeWriter(text, i + 1), 20);
     }
 }
 
-/* fake ramai */
-setInterval(()=>{
-    let num = Math.floor(Math.random()*5000)+1000;
-    document.getElementById("liveUser").innerText =
-    "👥 "+num+" orang sedang menggunakan";
-},2000);
+function lanjut() {
+    if (part < cerita.length) {
+        typeWriter("\n\n" + cerita[part]);
+        part++;
+        document.getElementById("bar").style.width = (part / cerita.length * 100) + "%";
+
+        if (part === 4) pilihan();
+
+    } else {
+        ending();
+    }
+}
+
+function pilihan() {
+    let div = document.getElementById("choices");
+    div.innerHTML = `
+    <p>Pilihan lu:</p>
+    <button onclick="pilih(1)">Gas terus</button>
+    <button onclick="pilih(2)">Diam & lihat dulu</button>
+    `;
+}
+
+function pilih(x) {
+    choice = x;
+    document.getElementById("choices").innerHTML = "";
+}
+
+function ending() {
+    if (choice === 1) {
+        typeWriter("\n\nLu tipe yang gerak. Biasanya orang kayak gini gak suka ribet.\n\nMereka cuma butuh sistem yang jelas.");
+    } else {
+        typeWriter("\n\nLu tipe yang mikir dulu. Dan itu bagus.\n\nTapi terlalu lama mikir… bikin peluang lewat.");
+    }
+
+    setTimeout(() => {
+        typeWriter("\n\nAden udah bangun sistemnya.\nDan lu tinggal pakai.");
+    }, 2000);
+
+    setTimeout(() => {
+        document.getElementById("cta").style.display = "block";
+    }, 4000);
+}
+
+/* Rain */
+let canvas = document.getElementById("rain");
+let ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let rainDrops = [];
+
+for (let i = 0; i < 100; i++) {
+    rainDrops[i] = {
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height
+    }
+}
+
+function drawRain() {
+    ctx.fillStyle = "rgba(0,0,0,0.05)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = "#aaa";
+    for (let i = 0; i < rainDrops.length; i++) {
+        let r = rainDrops[i];
+        ctx.fillRect(r.x, r.y, 2, 10);
+        r.y += 5;
+
+        if (r.y > canvas.height) {
+            r.y = 0;
+        }
+    }
+}
+
+setInterval(drawRain, 30);
+
 </script>
 
 </body>
