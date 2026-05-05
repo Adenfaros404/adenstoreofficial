@@ -1,220 +1,101 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aden Teman Ku</title>
+  <meta charset="UTF-8">
+  <title>Reaction Test</title>
 
-<style>
-body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: radial-gradient(circle at top, #3b2f2f, #1a1a1a);
-    color: #f5e6d3;
-    overflow-x: hidden;
-}
+  <style>
+    body {
+      background: #0a0a0a;
+      color: #fff;
+      font-family: Arial;
+      text-align: center;
+      padding-top: 100px;
+    }
 
-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -1;
-}
+    h1 {
+      color: #b026ff;
+    }
 
-.container {
-    max-width: 800px;
-    margin: auto;
-    padding: 40px 20px;
-}
+    #box {
+      width: 200px;
+      height: 200px;
+      background: #222;
+      margin: 30px auto;
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.3s;
+    }
 
-h1 {
-    text-align: center;
-    color: #ffd6a5;
-}
+    #box.ready {
+      background: #b026ff;
+      box-shadow: 0 0 20px #b026ff;
+    }
 
-.story {
-    font-size: 16px;
-    white-space: pre-line;
-    min-height: 200px;
-}
-
-button {
-    margin: 10px;
-    padding: 10px 20px;
-    border: none;
-    background: #d4a373;
-    color: #2c2c2c;
-    border-radius: 10px;
-    cursor: pointer;
-}
-
-.progress {
-    height: 5px;
-    background: #333;
-    margin-bottom: 20px;
-}
-
-.progress-bar {
-    height: 5px;
-    width: 0%;
-    background: #ffd6a5;
-    transition: 0.5s;
-}
-
-.cta {
-    text-align: center;
-    margin-top: 40px;
-    display: none;
-}
-
-.cta a {
-    display: inline-block;
-    padding: 12px 25px;
-    background: #25D366;
-    color: white;
-    text-decoration: none;
-    border-radius: 10px;
-    font-weight: bold;
-}
-</style>
+    button {
+      padding: 10px 20px;
+      background: #b026ff;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
 </head>
-
 <body>
 
-<canvas id="rain"></canvas>
+  <h1>⚡ Reaction Test</h1>
+  <p>Klik kotak saat berubah warna!</p>
 
-<div class="container">
+  <div id="box">Tunggu...</div>
 
-<h1>Aden Teman Ku</h1>
+  <button onclick="start()">Mulai</button>
 
-<div class="progress">
-    <div class="progress-bar" id="bar"></div>
-</div>
+  <p id="result"></p>
 
-<div class="story" id="story"></div>
+  <script>
+    let startTime, endTime;
+    let timeout;
 
-<div id="choices"></div>
+    function start() {
+      let box = document.getElementById("box");
+      let result = document.getElementById("result");
 
-<button onclick="lanjut()">Lanjut</button>
+      box.classList.remove("ready");
+      box.innerHTML = "Tunggu...";
+      result.innerHTML = "";
 
-<div class="cta" id="cta">
-    <p>Kalau lu sampai sini… berarti lu paham satu hal.</p>
-    <p>Bukan soal kuota. Tapi siapa yang pegang sistemnya.</p>
-    <a href="https://wa.me/6283878348853?text=Gue%20mau%20kuota%20Akbar">Hubungi Aden</a>
-</div>
+      let delay = Math.random() * 3000 + 2000;
 
-</div>
-
-<audio id="bgm" loop>
-<source src="https://cdn.pixabay.com/audio/2023/03/14/audio_5f9c92b9d2.mp3" type="audio/mpeg">
-</audio>
-
-<script>
-
-// autoplay
-document.body.addEventListener('click', () => {
-    document.getElementById("bgm").play();
-}, { once: true });
-
-let part = 0;
-let choice = 0;
-
-const cerita = [
-"Aden bukan sekadar orang jualan.\n\nDia orang yang lagi bangun sesuatu.",
-"Yang orang lihat cuma transaksi.\n\nYang gak mereka lihat: sistem di belakangnya.",
-"Dia kerja saat yang lain santai.\n\nDan itu bukan gaya… itu strategi.",
-"Masalahnya cuma satu:\napakah dia cukup tahan?",
-"Karena dunia ini bukan soal cepat.\n\nTapi siapa yang bertahan.",
-"Dan kalau lu baca ini sampai sini…",
-"Berarti lu beda.\n\nLu bukan tipe yang asal lewat.",
-"Lu tipe yang mikir."
-];
-
-function typeWriter(text, i = 0) {
-    if (i < text.length) {
-        document.getElementById("story").innerHTML += text.charAt(i);
-        setTimeout(() => typeWriter(text, i + 1), 20);
-    }
-}
-
-function lanjut() {
-    if (part < cerita.length) {
-        typeWriter("\n\n" + cerita[part]);
-        part++;
-        document.getElementById("bar").style.width = (part / cerita.length * 100) + "%";
-
-        if (part === 4) pilihan();
-
-    } else {
-        ending();
-    }
-}
-
-function pilihan() {
-    let div = document.getElementById("choices");
-    div.innerHTML = `
-    <p>Pilihan lu:</p>
-    <button onclick="pilih(1)">Gas terus</button>
-    <button onclick="pilih(2)">Diam & lihat dulu</button>
-    `;
-}
-
-function pilih(x) {
-    choice = x;
-    document.getElementById("choices").innerHTML = "";
-}
-
-function ending() {
-    if (choice === 1) {
-        typeWriter("\n\nLu tipe yang gerak. Biasanya orang kayak gini gak suka ribet.\n\nMereka cuma butuh sistem yang jelas.");
-    } else {
-        typeWriter("\n\nLu tipe yang mikir dulu. Dan itu bagus.\n\nTapi terlalu lama mikir… bikin peluang lewat.");
+      timeout = setTimeout(() => {
+        box.classList.add("ready");
+        box.innerHTML = "KLIK!";
+        startTime = new Date().getTime();
+      }, delay);
     }
 
-    setTimeout(() => {
-        typeWriter("\n\nAden udah bangun sistemnya.\nDan lu tinggal pakai.");
-    }, 2000);
+    document.getElementById("box").onclick = function () {
+      let box = document.getElementById("box");
+      let result = document.getElementById("result");
 
-    setTimeout(() => {
-        document.getElementById("cta").style.display = "block";
-    }, 4000);
-}
+      if (!box.classList.contains("ready")) {
+        clearTimeout(timeout);
+        result.innerHTML = "❌ Kepencet duluan!";
+        return;
+      }
 
-/* Rain */
-let canvas = document.getElementById("rain");
-let ctx = canvas.getContext("2d");
+      endTime = new Date().getTime();
+      let reaction = endTime - startTime;
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+      result.innerHTML = "⚡ Reaksi lu: " + reaction + " ms";
 
-let rainDrops = [];
-
-for (let i = 0; i < 100; i++) {
-    rainDrops[i] = {
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height
-    }
-}
-
-function drawRain() {
-    ctx.fillStyle = "rgba(0,0,0,0.05)";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    ctx.fillStyle = "#aaa";
-    for (let i = 0; i < rainDrops.length; i++) {
-        let r = rainDrops[i];
-        ctx.fillRect(r.x, r.y, 2, 10);
-        r.y += 5;
-
-        if (r.y > canvas.height) {
-            r.y = 0;
-        }
-    }
-}
-
-setInterval(drawRain, 30);
-
-</script>
+      box.classList.remove("ready");
+      box.innerHTML = "Ulangi?";
+    };
+  </script>
 
 </body>
 </html>
