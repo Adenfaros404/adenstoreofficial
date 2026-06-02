@@ -1,101 +1,209 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Reaction Test</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    body {
-      background: #0a0a0a;
-      color: #fff;
-      font-family: Arial;
-      text-align: center;
-      padding-top: 100px;
-    }
+<title>Final Logout</title>
 
-    h1 {
-      color: #b026ff;
-    }
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
-    #box {
-      width: 200px;
-      height: 200px;
-      background: #222;
-      margin: 30px auto;
-      border-radius: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: 0.3s;
-    }
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
 
-    #box.ready {
-      background: #b026ff;
-      box-shadow: 0 0 20px #b026ff;
-    }
+body{
+background:#050505;
+color:white;
+overflow-x:hidden;
+}
 
-    button {
-      padding: 10px 20px;
-      background: #b026ff;
-      border: none;
-      color: white;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-  </style>
+canvas{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+z-index:-1;
+}
+
+.hero{
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:20px;
+}
+
+.hero h1{
+font-size:3rem;
+background:linear-gradient(90deg,#00ffe7,#ffffff,#ff5cff);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+animation:glow 3s infinite;
+}
+
+.hero p{
+margin-top:15px;
+opacity:.8;
+max-width:600px;
+}
+
+@keyframes glow{
+50%{
+filter:drop-shadow(0 0 20px #00ffe7);
+}
+}
+
+.scroll{
+margin-top:30px;
+animation:float 2s infinite;
+}
+
+@keyframes float{
+50%{
+transform:translateY(10px);
+}
+}
+
+.section{
+padding:100px 25px;
+max-width:900px;
+margin:auto;
+}
+
+.card{
+background:rgba(255,255,255,.05);
+backdrop-filter:blur(15px);
+border:1px solid rgba(255,255,255,.1);
+padding:25px;
+border-radius:25px;
+margin-bottom:25px;
+}
+
+.final{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+flex-direction:column;
+}
+
+.final h2{
+font-size:2.5rem;
+color:#00ffe7;
+}
+
+.final p{
+opacity:.7;
+margin-top:10px;
+}
+</style>
 </head>
+
 <body>
 
-  <h1>⚡ Reaction Test</h1>
-  <p>Klik kotak saat berubah warna!</p>
+<canvas id="bg"></canvas>
 
-  <div id="box">Tunggu...</div>
+<section class="hero">
 
-  <button onclick="start()">Mulai</button>
+<h1>FINAL LOGOUT</h1>
 
-  <p id="result"></p>
+<p>
+Setelah ribuan jam online,
+ratusan percakapan,
+dan banyak cerita yang tidak sempat disimpan...
+hari ini adalah akhir dari perjalanan ini.
+</p>
 
-  <script>
-    let startTime, endTime;
-    let timeout;
+<div class="scroll">
+⬇
+</div>
 
-    function start() {
-      let box = document.getElementById("box");
-      let result = document.getElementById("result");
+</section>
 
-      box.classList.remove("ready");
-      box.innerHTML = "Tunggu...";
-      result.innerHTML = "";
+<section class="section">
 
-      let delay = Math.random() * 3000 + 2000;
+<div class="card">
+<h2>Chapter 01</h2>
+<p>
+Berawal dari seseorang yang hanya ingin mengisi waktu.
+</p>
+</div>
 
-      timeout = setTimeout(() => {
-        box.classList.add("ready");
-        box.innerHTML = "KLIK!";
-        startTime = new Date().getTime();
-      }, delay);
-    }
+<div class="card">
+<h2>Chapter 02</h2>
+<p>
+Bertemu banyak orang, tertawa, bertengkar,
+kemudian saling mengenang.
+</p>
+</div>
 
-    document.getElementById("box").onclick = function () {
-      let box = document.getElementById("box");
-      let result = document.getElementById("result");
+<div class="card">
+<h2>Chapter 03</h2>
+<p>
+Tidak semua cerita berakhir bahagia.
+Namun semuanya layak dikenang.
+</p>
+</div>
 
-      if (!box.classList.contains("ready")) {
-        clearTimeout(timeout);
-        result.innerHTML = "❌ Kepencet duluan!";
-        return;
-      }
+</section>
 
-      endTime = new Date().getTime();
-      let reaction = endTime - startTime;
+<section class="final">
 
-      result.innerHTML = "⚡ Reaksi lu: " + reaction + " ms";
+<h2>Connection Lost</h2>
 
-      box.classList.remove("ready");
-      box.innerHTML = "Ulangi?";
-    };
-  </script>
+<p>
+Thank you for being part of my story.
+</p>
+
+</section>
+
+<script>
+const canvas=document.getElementById("bg");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let stars=[];
+
+for(let i=0;i<150;i++){
+stars.push({
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height,
+r:Math.random()*2
+});
+}
+
+function animate(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+stars.forEach(s=>{
+ctx.beginPath();
+ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+ctx.fillStyle="white";
+ctx.fill();
+
+s.y+=0.3;
+
+if(s.y>canvas.height){
+s.y=0;
+}
+});
+
+requestAnimationFrame(animate);
+}
+
+animate();
+</script>
 
 </body>
 </html>
